@@ -1,15 +1,10 @@
-import { Link } from 'react-router-dom';
-import { routes } from '../index';
+import Header from '../../components/Header';
 
 function Home() {
   return (
-    <ul>
-      {routes.map((route) => (
-        <Link to={route.path}>
-          <li>{route.name}</li>
-        </Link>
-      ))}
-    </ul>
+    <>
+      <Header />
+    </>
   );
 }
 

@@ -1,9 +1,11 @@
+import Header from '../../components/Header';
 
 function About() {
-    return (
-      <div>about</div>
-    )
-  }
-  
-  export default About
-  
+  return (
+    <>
+      <Header />
+    </>
+  );
+}
+
+export default About;
