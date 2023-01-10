@@ -1,26 +1,65 @@
 import styled from 'styled-components';
+import Button from '../../components/Button';
+import Footer from '../../components/Footer';
 import Header from '../../components/Header';
 import Quote from '../../components/Quote';
-import { availablePictures, notAvailablePictures } from '../../constants';
+import { pictures } from '../../constants';
 
-const Pictures = styled.section``;
-const PicturesLine = styled.div``;
-const Button = styled.button``;
-const ButtonWrapper = styled.div``;
-const Image = styled.img``;
+const Pictures = styled.section`
+  margin: 120px 0 200px 0;
+`;
+const PicturesLine = styled.div`
+  display: flex;
+  margin-bottom: 30px;
+  width: 100%;
+  justify-content: space-around;
+
+  @media ${({ theme }) => theme.sizes.mobile} {
+    flex-direction: column;
+    align-items: center;
+  }
+`;
+const Image = styled.img`
+  width: 35vmin;
+  height: 35vmin;
+  object-fit: cover;
+
+  @media ${({ theme }) => theme.sizes.mobile} {
+    width: 80vmin;
+    height: 80vmin;
+    margin: 45px 0;
+  }
+`;
 
 function Home() {
-  const randomFolder =
-    Math.random() > 0.5 ? notAvailablePictures : availablePictures;
-  const randomPictures = [randomFolder[Math.abs(Math.round(Math.random() * randomFolder.length))].id];
+  const picturesLine = () => {
+    const randomPicturesIds = [
+      pictures[Math.abs(Math.round(Math.random() * pictures.length))].id,
+    ];
 
-  while (randomPictures.length < 4) {
-    const fold = Math.random() > 0.5 ? notAvailablePictures : availablePictures;
-    const num = fold[Math.abs(Math.round(Math.random() * fold.length - 1))].id;
-    if (!randomPictures.includes(num)) randomPictures.push(fold[num].id);
-  }
+    while (randomPicturesIds.length < 4) {
+      const num =
+        pictures[Math.abs(Math.round(Math.random() * pictures.length - 1))].id;
+      if (!randomPicturesIds.includes(num)) randomPicturesIds.push(num);
+    }
 
-  console.log(randomPictures);
+    return (
+      <PicturesLine>
+        {randomPicturesIds.map((picId) => {
+          console.log(
+            pictures.filter((picture) => picture.id === picId),
+            randomPicturesIds
+          );
+          return (
+            <Image
+              src={pictures.filter((picture) => picture.id === picId)[0].path}
+              alt="painting"
+            />
+          );
+        })}
+      </PicturesLine>
+    );
+  };
 
   return (
     <>
@@ -33,12 +72,11 @@ function Home() {
         </p>
       </Quote>
       <Pictures>
-        <PicturesLine></PicturesLine>
-        <ButtonWrapper>
-          <Button outlined>discover</Button>
-        </ButtonWrapper>
-        <PicturesLine>{/* 4 random pictures */}</PicturesLine>
+        {picturesLine()}
+        <Button outlined label="Discover" size={2} />
+        {picturesLine()}
       </Pictures>
+      <Footer />
     </>
   );
 }

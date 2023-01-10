@@ -62,6 +62,10 @@ const MenuWrapper = styled.menu`
     li {
       margin: 90px;
     }
+    a {
+      text-decoration: none;
+      color: ${({ theme }) => theme.colors.white};
+    }
     a:active {
       font-weight: 600;
     }
