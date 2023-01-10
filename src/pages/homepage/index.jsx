@@ -7,7 +7,7 @@ import Quote from '../../components/Quote';
 import { pictures } from '../../constants';
 
 const Pictures = styled.section`
-  margin: 10vw 0 15vw 0;
+  margin: 6vw 0 15vw 0;
 `;
 const PicturesLine = styled.div`
   display: flex;
