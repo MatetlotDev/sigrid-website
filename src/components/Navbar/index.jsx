@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { routes } from '../../pages';
 
@@ -76,8 +76,7 @@ const NavBarWrapper = styled.nav`
 `;
 
 const NavBar = ({ large }) => {
-  const active = (path) =>
-    window.location.pathname === path ? 'active' : 'not-active';
+  const { pathname } = useLocation();
 
   return (
     <NavBarWrapper large={large}>
@@ -86,7 +85,9 @@ const NavBar = ({ large }) => {
           (route) =>
             route.inHeader && (
               <Link key={route.path} to={route.path}>
-                <li className={active(route.path)}>{route.name}</li>
+                <li className={pathname === route.path ? 'active' : 'not-active'}>
+                  {route.name}
+                </li>
               </Link>
             )
         )}

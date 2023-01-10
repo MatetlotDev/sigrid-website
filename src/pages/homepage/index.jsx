@@ -1,8 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Button from '../../components/Button';
-import Footer from '../../components/Footer';
-import Header from '../../components/Header';
 import Quote from '../../components/Quote';
 import { pictures } from '../../constants';
 
@@ -64,7 +62,6 @@ function Home() {
 
   return (
     <>
-      <Header />
       <Quote>
         <blockquote>&ldquo;Painting is energy made visible&rdquo;</blockquote>
         <p>
@@ -82,7 +79,6 @@ function Home() {
         />
         {picturesLine()}
       </Pictures>
-      <Footer />
     </>
   );
 }
