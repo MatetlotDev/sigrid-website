@@ -29,9 +29,9 @@ const StyledButton = styled.button`
   }
 `;
 
-const Button = ({ outlined, size, label }) => {
+const Button = ({ outlined, size, label, onClick }) => {
   return (
-    <StyledButton outlined={outlined} size={size}>
+    <StyledButton onClick={() => onClick && onClick()} outlined={outlined} size={size}>
       {label}
     </StyledButton>
   );

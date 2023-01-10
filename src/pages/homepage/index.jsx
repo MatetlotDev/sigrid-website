@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Button from '../../components/Button';
 import Footer from '../../components/Footer';
@@ -6,7 +7,7 @@ import Quote from '../../components/Quote';
 import { pictures } from '../../constants';
 
 const Pictures = styled.section`
-  margin: 120px 0 200px 0;
+  margin: 10vw 0 15vw 0;
 `;
 const PicturesLine = styled.div`
   display: flex;
@@ -23,6 +24,7 @@ const Image = styled.img`
   width: 35vmin;
   height: 35vmin;
   object-fit: cover;
+  margin: 0 15px;
 
   @media ${({ theme }) => theme.sizes.mobile} {
     width: 80vmin;
@@ -32,6 +34,8 @@ const Image = styled.img`
 `;
 
 function Home() {
+  const navigate = useNavigate();
+
   const picturesLine = () => {
     const randomPicturesIds = [
       pictures[Math.abs(Math.round(Math.random() * pictures.length))].id,
@@ -46,12 +50,9 @@ function Home() {
     return (
       <PicturesLine>
         {randomPicturesIds.map((picId) => {
-          console.log(
-            pictures.filter((picture) => picture.id === picId),
-            randomPicturesIds
-          );
           return (
             <Image
+              key={picId}
               src={pictures.filter((picture) => picture.id === picId)[0].path}
               alt="painting"
             />
@@ -73,7 +74,12 @@ function Home() {
       </Quote>
       <Pictures>
         {picturesLine()}
-        <Button outlined label="Discover" size={2} />
+        <Button
+          outlined
+          label="Discover"
+          onClick={() => navigate('/discover')}
+          size={2}
+        />
         {picturesLine()}
       </Pictures>
       <Footer />

@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 const QuoteWrapper = styled.section`
-  height: 70vh;
   width: 100%;
   text-align: center;
   padding: 130px;

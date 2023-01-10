@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { routes } from '../../../pages';
@@ -33,13 +32,12 @@ const HeaderIcon = styled.div`
 `;
 const MenuWrapper = styled.menu`
   display: flex;
-  position: absolute;
+  position: fixed;
   background: ${({ theme }) => theme.colors.black};
   top: 11.8vh;
   left: 0;
   bottom: 0;
   right: 0;
-  z-index: -1;
   color: ${({ theme }) => theme.colors.white};
   flex-direction: column;
   align-items: center;
@@ -72,8 +70,7 @@ const MenuWrapper = styled.menu`
   }
 `;
 
-const MobileMenu = () => {
-  const [open, setOpen] = useState(false);
+const MobileMenu = ({ open, setOpen }) => {
   return (
     <>
       <HeaderIcon onClick={() => setOpen(!open)} open={open}>
@@ -85,7 +82,7 @@ const MobileMenu = () => {
           {routes.map(
             (route) =>
               route.inHeader && (
-                <Link to={route.path} onClick={() => setOpen(false)}>
+                <Link key={route.path} to={route.path} onClick={() => setOpen(false)}>
                   <li>{route.name}</li>
                 </Link>
               )

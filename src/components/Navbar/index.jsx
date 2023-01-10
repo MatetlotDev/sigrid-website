@@ -76,7 +76,8 @@ const NavBarWrapper = styled.nav`
 `;
 
 const NavBar = ({ large }) => {
-  const active = (path) => window.location.pathname === path && 'active';
+  const active = (path) =>
+    window.location.pathname === path ? 'active' : 'not-active';
 
   return (
     <NavBarWrapper large={large}>
@@ -84,7 +85,7 @@ const NavBar = ({ large }) => {
         {routes.map(
           (route) =>
             route.inHeader && (
-              <Link to={route.path}>
+              <Link key={route.path} to={route.path}>
                 <li className={active(route.path)}>{route.name}</li>
               </Link>
             )

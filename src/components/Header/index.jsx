@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 import NavBar from '../Navbar';
 import MobileMenu from './components/MobileMenu';
@@ -9,7 +10,7 @@ const HeaderWrapper = styled.header`
   width: 100%;
   color: ${({ theme }) => theme.colors.white};
   display: flex;
-  position: relative;
+  position: ${({ open }) => (open ? 'fixed' : 'relative')};
   min-height: 12vh;
   max-height: 12vh;
   align-items: center;
@@ -17,10 +18,12 @@ const HeaderWrapper = styled.header`
 `;
 
 function Header() {
+  const [open, setOpen] = useState(false);
+
   return (
-    <HeaderWrapper>
+    <HeaderWrapper open={open}>
       <NavBar large />
-      <MobileMenu />
+      <MobileMenu open={open} setOpen={setOpen} />
     </HeaderWrapper>
   );
 }
