@@ -9,8 +9,8 @@ const FooterWrapper = styled.footer`
   color: ${({ theme }) => theme.colors.white};
   display: flex;
   position: relative;
-  min-height: 12vh;
-  max-height: 12vh;
+  min-height: 10vh;
+  max-height: 10vh;
   align-items: center;
 `;
 
