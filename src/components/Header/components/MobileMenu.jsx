@@ -26,7 +26,7 @@ const HeaderIcon = styled.div`
     }}
   }
 
-  @media ${({ theme }) => theme.sizes.mobile} {
+  @media ${({ theme }) => theme.sizes.tablet} {
     display: block;
   }
 `;

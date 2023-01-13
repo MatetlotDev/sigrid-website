@@ -13,7 +13,7 @@ const PicturesLine = styled.div`
   width: 100%;
   justify-content: space-around;
 
-  @media ${({ theme }) => theme.sizes.mobile} {
+  @media ${({ theme }) => theme.sizes.tablet} {
     flex-direction: column;
     align-items: center;
   }
@@ -24,7 +24,7 @@ const Image = styled.img`
   object-fit: cover;
   margin: 0 15px;
 
-  @media ${({ theme }) => theme.sizes.mobile} {
+  @media ${({ theme }) => theme.sizes.tablet} {
     width: 80vmin;
     height: 80vmin;
     margin: 45px 0;
@@ -76,6 +76,8 @@ function Home() {
           label="Discover"
           onClick={() => navigate('/discover')}
           size={2}
+          style={{ margin: '4vw auto' }}
+          border
         />
         {picturesLine()}
       </Pictures>

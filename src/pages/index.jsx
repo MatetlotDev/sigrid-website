@@ -38,11 +38,11 @@ export const routes = [
 ];
 
 const Root = () => (
-  <>
+  <main>
     <Header />
     <Outlet />
     <Footer />
-  </>
+  </main>
 );
 
 export default Root;

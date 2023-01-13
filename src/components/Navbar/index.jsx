@@ -63,7 +63,7 @@ const NavBarWrapper = styled.nav`
     `}
   }
 
-  @media ${({ theme }) => theme.sizes.mobile} {
+  @media ${({ theme }) => theme.sizes.tablet} {
     justify-content: space-between;
     position: static;
     .desktop-ul {

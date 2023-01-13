@@ -1,13 +1,13 @@
 import styled from 'styled-components';
 
 const StyledButton = styled.button`
-  margin: 4vw auto;
   display: block;
   border-radius: 0;
-  border: 1px solid ${({ theme }) => theme.colors.black};
+  border: ${({ theme, border }) =>
+    border ? `1px solid ${theme.colors.black}` : 'none'};
   text-transform: uppercase;
-  padding: 25px;
-  font-size: ${({ size }) => size}rem;
+  padding: clamp(15px, 20px, 25px);
+  font-size: ${({ size }) => `clamp(${size}rem, ${size}rem, ${size}rem + 2vw)`};
   font-family: 'Cinzel', serif;
   background: ${({ outlined, theme }) => (outlined ? 'none' : theme.colors.black)};
   color: ${({ outlined, theme }) =>
@@ -29,9 +29,15 @@ const StyledButton = styled.button`
   }
 `;
 
-const Button = ({ outlined, size, label, onClick }) => {
+const Button = ({ outlined, size, label, onClick, style, border }) => {
   return (
-    <StyledButton onClick={() => onClick && onClick()} outlined={outlined} size={size}>
+    <StyledButton
+      style={style && style}
+      onClick={() => onClick && onClick()}
+      outlined={outlined}
+      size={size}
+      border={border}
+    >
       {label}
     </StyledButton>
   );
