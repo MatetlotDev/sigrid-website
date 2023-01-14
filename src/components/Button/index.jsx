@@ -29,7 +29,7 @@ const StyledButton = styled.button`
   }
 `;
 
-const Button = ({ outlined, size, label, onClick, style, border }) => {
+const Button = ({ outlined, size, label, onClick, style, border, type }) => {
   return (
     <StyledButton
       style={style && style}
@@ -37,6 +37,7 @@ const Button = ({ outlined, size, label, onClick, style, border }) => {
       outlined={outlined}
       size={size}
       border={border}
+      type={type && type}
     >
       {label}
     </StyledButton>

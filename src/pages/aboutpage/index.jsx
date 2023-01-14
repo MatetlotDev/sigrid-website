@@ -1,21 +1,20 @@
 import styled from 'styled-components';
 
-const Section = styled.section`
+export const Section = styled.section`
   display: flex;
   padding: 3vw;
   width: 100vw;
   max-width: 100vw;
-  height: 78vh;
-  max-height: 78vh;
+  min-height: 78vh;
 
-  @media ${({ theme }) => theme.sizes.tabletS} {
+  @media ${({ theme }) => theme.sizes.tablet} {
     display: block;
     height: fit-content;
     max-height: fit-content;
     padding: 8vw;
   }
 `;
-const ProfilePic = styled.div`
+export const ProfilePic = styled.div`
   width: 50%;
   img {
     min-width: 300px;
@@ -29,7 +28,12 @@ const ProfilePic = styled.div`
     font-size: 1.4rem;
     min-width: max-content;
   }
-  @media ${({ theme }) => theme.sizes.tabletS} {
+  p {
+    font-family: 'Cinzel', serif;
+    margin-left: 5vw;
+    font-size: 2rem;
+  }
+  @media ${({ theme }) => theme.sizes.tablet} {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -40,11 +44,16 @@ const ProfilePic = styled.div`
     }
   }
 `;
-const Description = styled.article`
+export const Description = styled.article`
   max-width: 800px;
   margin-right: 2vw;
-  overflow: scroll;
   min-height: max-content;
+  h1 {
+    font-weight: 300;
+    font-size: 3rem;
+    font-family: 'Cinzel', serif;
+    margin-bottom: 2vw;
+  }
   blockquote {
     font-family: 'Cinzel', serif;
     font-size: 2rem;
@@ -53,6 +62,21 @@ const Description = styled.article`
     font-family: 'Cormorant', serif;
     font-size: 1.5rem;
     text-align: justify;
+  }
+  @media ${({ theme }) => theme.sizes.tablet} {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    p,
+    blockquote {
+      margin-bottom: 1.5vw;
+    }
+    blockquote, h1 {
+      text-align: center;
+    }
+    h1 {
+      font-size: 2rem;
+    }
   }
 `;
 
