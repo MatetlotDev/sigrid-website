@@ -1,6 +1,7 @@
 import { Outlet } from 'react-router-dom';
-import Header from '../components/Header';
 import Footer from '../components/Footer';
+import Header from '../components/Header';
+import PictureVisual from '../components/PictureVisual';
 import About from './aboutpage';
 import Contact from './contactPage';
 import Discover from './discoverPage';
@@ -41,6 +42,7 @@ const Root = () => (
   <main>
     <Header />
     <Outlet />
+    <PictureVisual />
     <Footer />
   </main>
 );

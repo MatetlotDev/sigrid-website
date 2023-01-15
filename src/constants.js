@@ -1,5 +1,13 @@
 export const pictures = [
   {
+    id: 0,
+    name: 'Earth',
+    dimensions: '760x760',
+    path: '/images/available/available011.jpeg',
+    price: 1600,
+    available: true,
+  },
+  {
     id: 1,
     name: 'Stillness',
     dimensions: '1520x1210',
@@ -105,11 +113,8 @@ export const pictures = [
   },
   {
     id: 14,
-    name: 'Earth',
-    dimensions: '760x760',
-    path: '/images/available/available011.jpeg',
-    price: 1600,
-    available: true,
+    path: '/images/not-available/not-available019.jpeg',
+    available: false,
   },
   {
     id: 15,
@@ -204,11 +209,6 @@ export const pictures = [
   {
     id: 33,
     path: '/images/not-available/not-available018.jpg',
-    available: false,
-  },
-  {
-    id: 34,
-    path: '/images/not-available/not-available019.jpeg',
     available: false,
   },
 ];

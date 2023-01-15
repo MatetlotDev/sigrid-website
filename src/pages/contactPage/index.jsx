@@ -107,7 +107,7 @@ function Contact() {
             <label htmlFor="Message">Message*</label>
             <textarea required rows="9" maxlength="10" id="Message" />
           </FormControl>
-          <Button size={1.35} label="send" type="submit" onClick={sendMail} />
+          <Button color="#FFF" size={1.35} label="send" type="submit" onClick={sendMail} />
         </form>
       </Description>
     </Section>

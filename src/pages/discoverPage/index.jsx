@@ -1,6 +1,8 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import Button from '../../components/Button';
+import { setImg } from '../../components/PictureVisual/redux/PictureVisualSlice';
 import Quote from '../../components/Quote';
 import { pictures } from '../../constants';
 
@@ -57,6 +59,7 @@ const ImageWrapper = styled.div`
 `;
 
 function Discover() {
+  const dispatch = useDispatch();
   const [sortPictures, setSortPictures] = useState(true);
 
   return (
@@ -89,8 +92,12 @@ function Discover() {
           {pictures
             .filter((pic) => pic.available === sortPictures)
             .map((pic, idx) => (
-              <ImageWrapper idx={idx}>
-                <img src={pic.path} alt="paint" />
+              <ImageWrapper idx={idx} key={pic.id}>
+                <img
+                  onClick={() => dispatch(setImg({ imgId: pic.id }))}
+                  src={pic.path}
+                  alt="paint"
+                />
                 {sortPictures && (
                   <>
                     <p>{pic.name}</p>

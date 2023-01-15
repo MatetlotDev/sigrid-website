@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { pictures } from '../../../constants';
 
 const initialState = {
   open: false,
@@ -9,15 +10,27 @@ export const pictureVisualSlice = createSlice({
   name: 'pictureVisual',
   initialState,
   reducers: {
-    setOpen: ({ open }, { payload }) => {
-      open = payload;
+    setOpen: (state, { payload }) => {
+      state.open = payload;
     },
-    setActualImg: ({ actualImg }, { payload }) => {
-      actualImg = payload;
+    setImg: (state, { payload }) => {
+      state.actualImg = pictures.find((pic) => pic.id === payload.imgId);
+      state.open = true;
+    },
+    nextImg: (state) => {
+      state.actualImg = pictures[state.actualImg.id + 1];
+    },
+    prevImg: (state) => {
+      state.actualImg = pictures[state.actualImg.id - 1];
     },
   },
 });
 
-export const { setOpen, setActualImg } = pictureVisualSlice.actions;
-
 export default pictureVisualSlice.reducer;
+
+// Actions
+export const { setOpen, nextImg, prevImg, setImg } = pictureVisualSlice.actions;
+
+// Selectors
+export const selectOpen = (state) => state.PictureVisualReducer.open;
+export const selectActualImg = (state) => state.PictureVisualReducer.actualImg;
