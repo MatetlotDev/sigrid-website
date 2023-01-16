@@ -1,6 +1,8 @@
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Button from '../../components/Button';
+import { setImg } from '../../components/PictureVisual/redux/PictureVisualSlice';
 import Quote from '../../components/Quote';
 import { pictures } from '../../constants';
 
@@ -23,6 +25,7 @@ const Image = styled.img`
   height: 35vmin;
   object-fit: cover;
   margin: 0 15px;
+  cursor: pointer;
 
   @media ${({ theme }) => theme.sizes.tablet} {
     width: 80vmin;
@@ -32,6 +35,7 @@ const Image = styled.img`
 `;
 
 function Home() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const picturesLine = () => {
@@ -50,6 +54,7 @@ function Home() {
         {randomPicturesIds.map((picId) => {
           return (
             <Image
+              onClick={() => dispatch(setImg({ imgId: picId }))}
               key={picId}
               src={pictures.filter((picture) => picture.id === picId)[0].path}
               alt="painting"

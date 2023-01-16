@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Button from '../../components/Button';
+import { selectActualImg } from '../../components/PictureVisual/redux/PictureVisualSlice';
 import { pictures } from '../../constants';
 import { Description, ProfilePic, Section } from '../aboutpage';
 
@@ -56,10 +58,12 @@ const ImageWrapper = styled.div`
 `;
 
 function Contact() {
+  const actualImg = useSelector(selectActualImg);
   const [img, setImg] = useState(null);
 
   useEffect(() => {
-    setImg(pictures[Math.round(Math.random() * pictures.length - 1)]);
+    if (actualImg) setImg(actualImg);
+    else setImg(pictures[Math.round(Math.random() * pictures.length - 1)]);
   }, [window.location.pathname]);
 
   const sendMail = () => {};
@@ -101,13 +105,23 @@ function Contact() {
             <label htmlFor="paint-name">
               Paint Name (if it's a question about one)
             </label>
-            <input id="paint-name" type="text" />
+            <input
+              value={actualImg ? actualImg.name : ''}
+              id="paint-name"
+              type="text"
+            />
           </FormControl>
           <FormControl>
             <label htmlFor="Message">Message*</label>
-            <textarea required rows="9" maxlength="10" id="Message" />
+            <textarea required rows="9" maxLength="10" id="Message" />
           </FormControl>
-          <Button color="#FFF" size={1.35} label="send" type="submit" onClick={sendMail} />
+          <Button
+            color="#FFF"
+            size={1.35}
+            label="send"
+            type="submit"
+            onClick={sendMail}
+          />
         </form>
       </Description>
     </Section>

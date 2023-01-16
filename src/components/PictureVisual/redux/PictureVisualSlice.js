@@ -14,8 +14,10 @@ export const pictureVisualSlice = createSlice({
       state.open = payload;
     },
     setImg: (state, { payload }) => {
-      state.actualImg = pictures.find((pic) => pic.id === payload.imgId);
-      state.open = true;
+      state.actualImg = payload
+        ? pictures.find((pic) => pic.id === payload.imgId)
+        : null;
+      state.open = !state.open;
     },
     nextImg: (state) => {
       state.actualImg = pictures[state.actualImg.id + 1];

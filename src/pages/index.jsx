@@ -1,4 +1,5 @@
-import { Outlet } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Outlet, useLocation } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import PictureVisual from '../components/PictureVisual';
@@ -38,13 +39,23 @@ export const routes = [
   },
 ];
 
-const Root = () => (
-  <main>
-    <Header />
-    <Outlet />
-    <PictureVisual />
-    <Footer />
-  </main>
-);
+const Root = () => {
+  const location = useLocation();
+  
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+    });
+  }, [location]);
+
+  return (
+    <main>
+      <Header />
+      <Outlet />
+      <PictureVisual />
+      <Footer />
+    </main>
+  );
+};
 
 export default Root;

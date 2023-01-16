@@ -1,6 +1,7 @@
 import { SlArrowLeft, SlArrowRight } from 'react-icons/sl';
 import { TfiClose } from 'react-icons/tfi';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Button from '../../components/Button';
 import { pictures } from '../../constants';
@@ -9,6 +10,7 @@ import {
   prevImg,
   selectActualImg,
   selectOpen,
+  setImg,
   setOpen,
 } from './redux/PictureVisualSlice';
 
@@ -72,7 +74,22 @@ const Wrapper = styled.div`
   .contact-button {
     position: absolute;
     right: 1%;
-    bottom: 3%;
+    bottom: 0%;
+  }
+
+  @media ${({ theme }) => theme.sizes.tabletS} {
+    .contact-button {
+      right: 50%;
+      transform: translateX(50%);
+    }
+    .next-icon,
+    .prev-icon {
+      display: none;
+    }
+    .close-icon {
+      top: -35px;
+      right: -35px;
+    }
   }
 `;
 const PictureWrapper = styled.div`
@@ -96,10 +113,18 @@ const PictureWrapper = styled.div`
     max-width: 70vw;
     max-height: 70vh;
   }
+
+  @media ${({ theme }) => theme.sizes.tabletS} {
+    img {
+      max-width: 100%;
+      max-height: 100%;
+    }
+  }
 `;
 
 function PictureVisual() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const open = useSelector(selectOpen);
   const actualImg = useSelector(selectActualImg);
 
@@ -107,13 +132,14 @@ function PictureVisual() {
   const isFirstImg = actualImg && actualImg.id === 0;
 
   const contactButtonClick = () => {
-    // redirect to /contact with actualImg in params
+    navigate('/contact');
+    dispatch(setOpen(false));
   };
 
   return (
     <BackgroundBlur open={open}>
       <Wrapper disableNext={isLastImg} disablePrev={isFirstImg}>
-        <TfiClose onClick={() => dispatch(setOpen(false))} className="close-icon" />
+        <TfiClose onClick={() => dispatch(setImg(null))} className="close-icon" />
         <SlArrowRight
           onClick={() => !isLastImg && dispatch(nextImg())}
           className="next-icon"
