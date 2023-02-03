@@ -26,12 +26,12 @@ const StyledButton = styled.button`
       else if (outlined)
         return `
         background: ${theme.colors.black};
-        color: ${theme.colors.white}
+        color: ${theme.colors.white};
         border-color: ${theme.colors.black};
       `;
       return `
         background: ${theme.colors.white};
-        color: ${theme.colors.black}
+        color: ${theme.colors.black};
       `;
     }}
   }

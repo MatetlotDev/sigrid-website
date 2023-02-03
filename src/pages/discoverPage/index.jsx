@@ -13,6 +13,7 @@ const Section = styled.section`
 `;
 const Buttons = styled.div`
   display: flex;
+  align-items: center;
 `;
 const PInfos = styled.p`
   font-family: 'Cormorant', serif;
@@ -85,8 +86,12 @@ function Discover() {
           />
         </Buttons>
         <PInfos>
-          All these paints are available for purchase,{' '}
-          <a href="/contact">contact me</a> if you are interested.
+          {sortPictures && (
+            <>
+              All these paints are available for purchase,{' '}
+              <a href="/contact">contact me</a> if you are interested.
+            </>
+          )}
         </PInfos>
         <Pictures>
           {pictures
