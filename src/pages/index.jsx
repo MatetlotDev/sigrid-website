@@ -4,7 +4,7 @@ import Footer from '../components/Footer';
 import Header from '../components/Header';
 import PictureVisual from '../components/PictureVisual';
 import About from './aboutpage';
-import Contact from './contactPage';
+// import Contact from './contactPage';
 import Discover from './discoverPage';
 import Home from './homepage';
 
@@ -30,13 +30,13 @@ export const routes = [
     errorElement: <div>Error page about</div>,
     inHeader: true,
   },
-  {
-    path: '/contact',
-    name: 'Contact',
-    element: <Contact />,
-    errorElement: <div>Error page contact</div>,
-    inHeader: true,
-  },
+  // {
+  //   path: '/contact',
+  //   name: 'Contact',
+  //   element: <Contact />,
+  //   errorElement: <div>Error page contact</div>,
+  //   inHeader: true,
+  // },
 ];
 
 const Root = () => {

@@ -2,8 +2,8 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Button from '../../components/Button';
-import { setImg } from '../../components/PictureVisual/redux/PictureVisualSlice';
 import Quote from '../../components/Quote';
+import { setImg } from '../../store/globalSlice';
 import { pictures } from '../../constants';
 
 const Pictures = styled.section`

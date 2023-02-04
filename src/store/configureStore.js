@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
+import contactSlice from '../pages/contactPage/redux/contactSlice';
 import homeSlice from '../pages/homepage/redux/homeSlice';
-import PictureVisualSlice from '../components/PictureVisual/redux/PictureVisualSlice';
+import globalSlice from './globalSlice';
 
 export const store = configureStore({
   reducer: {
     homeReducer: homeSlice,
-    PictureVisualReducer: PictureVisualSlice,
+    contactReducer: contactSlice,
+    globalReducer: globalSlice,
   },
 });

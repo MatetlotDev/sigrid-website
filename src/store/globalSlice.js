@@ -1,13 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { pictures } from '../../../constants';
+import { pictures } from '../constants';
 
 const initialState = {
   open: false,
   actualImg: null,
 };
 
-export const pictureVisualSlice = createSlice({
-  name: 'pictureVisual',
+export const globalSlice = createSlice({
+  name: 'globalSlice',
   initialState,
   reducers: {
     setOpen: (state, { payload }) => {
@@ -28,11 +28,11 @@ export const pictureVisualSlice = createSlice({
   },
 });
 
-export default pictureVisualSlice.reducer;
+export default globalSlice.reducer;
 
 // Actions
-export const { setOpen, nextImg, prevImg, setImg } = pictureVisualSlice.actions;
+export const { setOpen, nextImg, prevImg, setImg } = globalSlice.actions;
 
 // Selectors
-export const selectOpen = (state) => state.PictureVisualReducer.open;
-export const selectActualImg = (state) => state.PictureVisualReducer.actualImg;
+export const selectOpen = (state) => state.globalReducer.open;
+export const selectActualImg = (state) => state.globalReducer.actualImg;

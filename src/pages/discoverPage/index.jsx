@@ -2,9 +2,9 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import Button from '../../components/Button';
-import { setImg } from '../../components/PictureVisual/redux/PictureVisualSlice';
 import Quote from '../../components/Quote';
 import { pictures } from '../../constants';
+import { setImg } from '../../store/globalSlice';
 
 const Section = styled.section`
   padding: 5vw 10vw;
@@ -87,10 +87,10 @@ function Discover() {
         </Buttons>
         <PInfos>
           {sortPictures && (
-            <>
-              All these paints are available for purchase,{' '}
-              <a href="/contact">contact me</a> if you are interested.
-            </>
+            <span>
+              All these paints are available for purchase, contact me if you are
+              interested.
+            </span>
           )}
         </PInfos>
         <Pictures>

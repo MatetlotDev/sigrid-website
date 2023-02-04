@@ -1,9 +1,9 @@
 import { SlArrowLeft, SlArrowRight } from 'react-icons/sl';
 import { TfiClose } from 'react-icons/tfi';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import Button from '../../components/Button';
+// import Button from '../../components/Button';
 import { pictures } from '../../constants';
 import {
   nextImg,
@@ -11,8 +11,8 @@ import {
   selectActualImg,
   selectOpen,
   setImg,
-  setOpen,
-} from './redux/PictureVisualSlice';
+  // setOpen,
+} from '../../store/globalSlice';
 
 const BackgroundBlur = styled.section`
   display: ${({ open }) => (open ? 'block' : 'none')};
@@ -124,17 +124,17 @@ const PictureWrapper = styled.div`
 
 function PictureVisual() {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const open = useSelector(selectOpen);
   const actualImg = useSelector(selectActualImg);
 
   const isLastImg = actualImg && actualImg.id === pictures.length - 1;
   const isFirstImg = actualImg && actualImg.id === 0;
 
-  const contactButtonClick = () => {
-    navigate('/contact');
-    dispatch(setOpen(false));
-  };
+  // const contactButtonClick = () => {
+  //   navigate('/contact');
+  //   dispatch(setOpen(false));
+  // };
 
   return (
     <BackgroundBlur open={open}>
@@ -164,7 +164,7 @@ function PictureVisual() {
             </div>
           )}
         </PictureWrapper>
-        <Button
+        {/* <Button
           className="contact-button"
           label="contact"
           color="#FFF"
@@ -172,7 +172,7 @@ function PictureVisual() {
           border
           size={1.2}
           onClick={contactButtonClick}
-        />
+        /> */}
       </Wrapper>
     </BackgroundBlur>
   );

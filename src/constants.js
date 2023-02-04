@@ -212,3 +212,23 @@ export const pictures = [
     available: false,
   },
 ];
+
+// contact form errors
+const nameError = 'Your first name should be entered so I know who you are.';
+const msgError =
+  "Your message is either too small or missing, what's your question ?";
+const emailError = 'It seems that your email is not valid.';
+const timestampError =
+  "You've probably already sent me a email less than 24 hours ago, wait a little bit more.";
+const captchaError =
+  "I need to verify that you're not a robot, Captcha is not checked.";
+export const contactFormErrors = {
+  nameError,
+  msgError,
+  emailError,
+  timestampError,
+  captchaError,
+};
+
+// localstorage
+export const emailTimestamp = 'email_timestamp';
