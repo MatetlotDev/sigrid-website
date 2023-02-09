@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Button from '../../components/Button';
 import Quote from '../../components/Quote';
-import { pictures, tabletSmallWidth } from '../../constants';
+import { mobileWidth, pictures, tabletSmallWidth } from '../../constants';
 import { setImg } from '../../store/globalSlice';
 import AboutText from './components/AboutText';
 
@@ -22,6 +22,10 @@ const PicturesGrid = styled.div`
   @media ${({ theme }) => theme.sizes.tabletS} {
     grid-template-columns: repeat(2, 1fr);
   }
+  @media ${({ theme }) => theme.sizes.mobile} {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
 `;
 const Image = styled.img`
   width: 35vmin;
@@ -37,6 +41,10 @@ const Image = styled.img`
   @media ${({ theme }) => theme.sizes.tabletS} {
     width: 35vmin;
     height: 35vmin;
+  }
+  @media ${({ theme }) => theme.sizes.mobile} {
+    width: 70vmin;
+    height: 70vmin;
   }
 `;
 const About = styled.section`
@@ -79,6 +87,33 @@ const About = styled.section`
       width: 350px;
     }
   }
+  @media ${({ theme }) => theme.sizes.tabletS} {
+    .flex {
+      flex-direction: column;
+    }
+    h2 {
+      text-align: center;
+    }
+    .text {
+      margin-left: 0;
+      margin-top: 40px;
+    }
+  }
+  @media ${({ theme }) => theme.sizes.mobile} {
+    img {
+      width: 70vmin;
+      height: 70vmin;
+    }
+    .text {
+      width: 70vmin;
+    }
+    h2 {
+      font-size: 1.8rem;
+    }
+    p {
+      font-size: 1.25rem;
+    }
+  }
 `;
 
 function Home() {
@@ -88,6 +123,7 @@ function Home() {
   const picturesGrid = () => {
     let numOfPictures = 9;
     if (tabletSmallWidth) numOfPictures = 6;
+    if (mobileWidth) numOfPictures = 3;
     const randomPicturesIds = [
       pictures[Math.abs(Math.round(Math.random() * pictures.length))].id,
     ];
