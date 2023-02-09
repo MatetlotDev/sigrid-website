@@ -22,7 +22,7 @@ function Header() {
 
   return (
     <HeaderWrapper open={open}>
-      <NavBar large />
+      <NavBar large setOpen={setOpen} />
       <MobileMenu open={open} setOpen={setOpen} />
     </HeaderWrapper>
   );

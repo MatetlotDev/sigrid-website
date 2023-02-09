@@ -75,7 +75,7 @@ const NavBarWrapper = styled.nav`
   }
 `;
 
-const NavBar = ({ large }) => {
+const NavBar = ({ large, setOpen }) => {
   const { pathname } = useLocation();
 
   return (
@@ -92,7 +92,7 @@ const NavBar = ({ large }) => {
             )
         )}
       </ul>
-      <Link to="/">
+      <Link to="/" onClick={() => setOpen(false)}>
         <span>Sigrid Freyens</span>
       </Link>
     </NavBarWrapper>
