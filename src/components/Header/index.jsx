@@ -10,7 +10,7 @@ const HeaderWrapper = styled.header`
   width: 100%;
   color: ${({ theme }) => theme.colors.white};
   display: flex;
-  position: ${({ open }) => (open ? 'fixed' : 'relative')};
+  position: relative;
   min-height: 12vh;
   max-height: 12vh;
   align-items: center;
