@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
+import { selectOpen } from '../../store/globalSlice';
 import NavBar from '../Navbar';
 import MobileMenu from './components/MobileMenu';
 
@@ -19,11 +21,15 @@ const HeaderWrapper = styled.header`
 
 function Header() {
   const [open, setOpen] = useState(false);
+  const pictureOpen = useSelector(selectOpen);
 
   useEffect(() => {
-    if (open) document.body.style.overflow = 'hidden';
-    else document.body.style.overflow = 'unset';
-  }, [open]);
+    if (open || pictureOpen) document.body.style.overflow = 'hidden';
+    else {
+      document.body.style.overflowX = 'hidden';
+      document.body.style.overflowY = 'unset';
+    }
+  }, [open, pictureOpen]);
 
   return (
     <HeaderWrapper open={open}>

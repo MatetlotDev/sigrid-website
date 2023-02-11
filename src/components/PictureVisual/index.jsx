@@ -11,38 +11,32 @@ import {
   selectActualImg,
   selectOpen,
   setImg,
-  // setOpen,
 } from '../../store/globalSlice';
 
-const BackgroundBlur = styled.section`
+const Section = styled.section`
   display: ${({ open }) => (open ? 'block' : 'none')};
   position: fixed;
-  z-index: 111;
   top: 0;
   left: 0;
   height: 100vh;
   width: 100vw;
   max-height: 100vh;
   max-width: 100vw;
-  background: rgba(14, 14, 14, 0.75);
-  backdrop-filter: blur(15px);
   padding: 50px;
-`;
-const Wrapper = styled.div`
-  position: relative;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  z-index: 111;
   color: white;
 
-  .close-icon,
-  .prev-icon,
-  .next-icon {
+  & > * {
+    z-index: 11111;
+  }
+
+  .icon,
+  .icon,
+  .icon {
     position: absolute;
     font-size: 3rem;
     cursor: pointer;
+    padding: 50px;
   }
   .close-icon {
     top: 0;
@@ -86,13 +80,24 @@ const Wrapper = styled.div`
     .prev-icon {
       display: none;
     }
-    .close-icon {
-      top: -35px;
-      right: -35px;
-    }
   }
 `;
+const Backdrop = styled.div`
+  z-index: 1111;
+  position: absolute;
+  backdrop-filter: blur(15px);
+  background: rgba(14, 14, 14, 0.75);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+`;
 const PictureWrapper = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
   span {
     font-family: 'Cormorant', serif;
     font-size: 1.2rem;
@@ -116,8 +121,8 @@ const PictureWrapper = styled.div`
 
   @media ${({ theme }) => theme.sizes.tabletS} {
     img {
-      max-width: 100%;
-      max-height: 100%;
+      max-width: 95vmin;
+      max-height: 95vmin;
     }
   }
 `;
@@ -137,34 +142,34 @@ function PictureVisual() {
   // };
 
   return (
-    <BackgroundBlur open={open}>
-      <Wrapper disableNext={isLastImg} disablePrev={isFirstImg}>
-        <TfiClose onClick={() => dispatch(setImg(null))} className="close-icon" />
-        <SlArrowRight
-          onClick={() => !isLastImg && dispatch(nextImg())}
-          className="next-icon"
-        />
-        <SlArrowLeft
-          onClick={() => !isFirstImg && dispatch(prevImg())}
-          className="prev-icon"
-        />
-        <PictureWrapper>
-          {actualImg && (
-            <img src={actualImg.path} alt="sigrig painting in bigger view" />
-          )}
-          {actualImg && actualImg.available && (
-            <div className="flex">
-              <div>
-                <p>{actualImg.name}</p>
-                <span>
-                  {actualImg.dimensions} - {actualImg.available && 'Available'}
-                </span>
-                <span>{actualImg.price} NZ$</span>
-              </div>
+    <Section open={open} disableNext={isLastImg} disablePrev={isFirstImg}>
+      <Backdrop onClick={() => dispatch(setImg(null))} />
+      <div className="icon close-icon">
+        <TfiClose onClick={() => dispatch(setImg(null))} />
+      </div>
+      <div className="icon next-icon">
+        <SlArrowRight onClick={() => !isLastImg && dispatch(nextImg())} />
+      </div>
+      <div className="icon prev-icon">
+        <SlArrowLeft onClick={() => !isFirstImg && dispatch(prevImg())} />
+      </div>
+      <PictureWrapper>
+        {actualImg && (
+          <img src={actualImg.path} alt="sigrig painting in bigger view" />
+        )}
+        {actualImg && actualImg.available && (
+          <div className="flex">
+            <div>
+              <p>{actualImg.name}</p>
+              <span>
+                {actualImg.dimensions} - {actualImg.available && 'Available'}
+              </span>
+              <span>{actualImg.price} NZ$</span>
             </div>
-          )}
-        </PictureWrapper>
-        {/* <Button
+          </div>
+        )}
+      </PictureWrapper>
+      {/* <Button
           className="contact-button"
           label="contact"
           color="#FFF"
@@ -173,8 +178,7 @@ function PictureVisual() {
           size={1.2}
           onClick={contactButtonClick}
         /> */}
-      </Wrapper>
-    </BackgroundBlur>
+    </Section>
   );
 }
 
