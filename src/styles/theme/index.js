@@ -1,3 +1,5 @@
+import { mobileSize, tabletSize, tabletSmallSize } from '../../constants';
+
 export const theme = {
   colors: {
     white: '#FFFFFF',
@@ -5,8 +7,8 @@ export const theme = {
   },
   fonts: ['Cinzel', 'Cormorant'],
   sizes: {
-    mobile: '(max-width: 550px)',
-    tabletS: '(max-width: 750px)',
-    tablet: '(max-width: 1350px)',
+    mobile: `(max-width: ${mobileSize}px)`,
+    tabletS: `(max-width: ${tabletSmallSize}px)`,
+    tablet: `(max-width: ${tabletSize}px)`,
   },
 };

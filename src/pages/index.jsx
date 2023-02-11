@@ -1,5 +1,6 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
+import BackToTop from '../components/BackToTop';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import PictureVisual from '../components/PictureVisual';
@@ -41,11 +42,31 @@ export const routes = [
 
 const Root = () => {
   const location = useLocation();
-  
-  useEffect(() => {
+
+  const [backBtnVisible, setBackBtnVisible] = useState(false);
+
+  const handleScroll = useCallback(() => {
+    if (window.pageYOffset > 1000) setBackBtnVisible(true);
+    else setBackBtnVisible(false);
+  }, [setBackBtnVisible]);
+
+  const handleBackToTop = (behavior) => {
     window.scrollTo({
       top: 0,
+      behavior: behavior ? behavior : 'auto',
     });
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [handleScroll]);
+
+  useEffect(() => {
+    handleBackToTop();
   }, [location]);
 
   return (
@@ -53,6 +74,7 @@ const Root = () => {
       <Header />
       <Outlet />
       <PictureVisual />
+      <BackToTop visible={backBtnVisible} onClick={handleBackToTop} />
       <Footer />
     </main>
   );

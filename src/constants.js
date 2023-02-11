@@ -232,3 +232,12 @@ export const contactFormErrors = {
 
 // localstorage
 export const emailTimestamp = 'email_timestamp';
+
+// sizes
+export const tabletSize = 1350;
+export const tabletSmallSize = 750;
+export const mobileSize = 550;
+
+export const tabletWidth = window.innerWidth <= tabletSize;
+export const tabletSmallWidth = window.innerWidth <= tabletSmallSize;
+export const mobileWidth = window.innerWidth <= mobileSize;
