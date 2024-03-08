@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Button from '../../components/Button';
 import Quote from '../../components/Quote';
-import { mobileWidth, pictures, tabletSmallWidth } from '../../constants';
+import { allPictures, mobileWidth, tabletSmallWidth } from '../../constants';
 import { setImg } from '../../store/globalSlice';
 import AboutText from './components/AboutText';
 
@@ -25,7 +25,6 @@ const PicturesGrid = styled.div`
   @media ${({ theme }) => theme.sizes.mobile} {
     grid-template-columns: repeat(1, 1fr);
   }
-
 `;
 const Image = styled.img`
   width: 35vmin;
@@ -125,12 +124,12 @@ function Home() {
     if (tabletSmallWidth) numOfPictures = 6;
     if (mobileWidth) numOfPictures = 3;
     const randomPicturesIds = [
-      pictures[Math.abs(Math.round(Math.random() * pictures.length))].id,
+      allPictures[Math.abs(Math.round(Math.random() * allPictures.length))].id,
     ];
 
     while (randomPicturesIds.length < numOfPictures) {
       const num =
-        pictures[Math.abs(Math.round(Math.random() * pictures.length - 1))].id;
+        allPictures[Math.abs(Math.round(Math.random() * allPictures.length - 1))].id;
       if (!randomPicturesIds.includes(num)) randomPicturesIds.push(num);
     }
 
@@ -141,7 +140,7 @@ function Home() {
             <Image
               onClick={() => dispatch(setImg({ imgId: picId }))}
               key={picId}
-              src={pictures.filter((picture) => picture.id === picId)[0].path}
+              src={allPictures.filter((picture) => picture.id === picId)[0].path}
               alt="painting"
             />
           );

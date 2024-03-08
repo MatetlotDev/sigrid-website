@@ -1,217 +1,237 @@
-export const pictures = [
+import { v4 as uuid } from 'uuid';
+
+export const notAvailablePictures = [
   {
-    id: 0,
-    name: 'Earth',
-    dimensions: '760x760',
-    path: '/images/available/available011.jpeg',
-    price: 1600,
-    available: true,
-  },
-  {
-    id: 1,
+    id: uuid(),
     name: 'Stillness',
     dimensions: '1520x1210',
-    path: '/images/available/available000.jpeg',
+    path: '/images/not_available/not_available000.jpeg',
     price: 3500,
-    available: true,
   },
   {
-    id: 2,
-    name: 'Misty day',
-    dimensions: '300x910',
-    path: '/images/available/available004.jpeg',
-    price: 600,
-    available: true,
+    id: uuid(),
+    path: '/images/not_available/not_available001.jpeg',
   },
   {
-    id: 3,
+    id: uuid(),
+    path: '/images/not_available/not_available002.jpeg',
+  },
+  {
+    id: uuid(),
+    path: '/images/not_available/not_available003.jpeg',
+  },
+  {
+    id: uuid(),
+    path: '/images/not_available/not_available004.jpeg',
+  },
+  {
+    id: uuid(),
+    path: '/images/not_available/not_available005.jpeg',
+  },
+  {
+    id: uuid(),
+    path: '/images/not_available/not_available006.jpeg',
+  },
+  {
+    id: uuid(),
+    path: '/images/not_available/not_available007.jpeg',
+  },
+  {
+    id: uuid(),
+    path: '/images/not_available/not_available008.jpeg',
+  },
+  {
+    id: uuid(),
+    path: '/images/not_available/not_available009.jpeg',
+  },
+  {
+    id: uuid(),
+    path: '/images/not_available/not_available010.jpeg',
+  },
+  {
+    id: uuid(),
+    path: '/images/not_available/not_available011.jpeg',
+  },
+  {
+    id: uuid(),
+    path: '/images/not_available/not_available012.jpeg',
+  },
+  {
+    id: uuid(),
+    path: '/images/not_available/not_available013.jpeg',
+  },
+  {
+    id: uuid(),
+    path: '/images/not_available/not_available014.jpeg',
+  },
+  {
+    id: uuid(),
+    path: '/images/not_available/not_available15.jpeg',
+  },
+  {
+    id: uuid(),
+    path: '/images/not_available/not_available015.jpeg',
+  },
+  {
+    id: uuid(),
+    path: '/images/not_available/not_available016.jpeg',
+  },
+  {
+    id: uuid(),
+    path: '/images/not_available/not_available017.jpeg',
+  },
+  {
+    id: uuid(),
+    path: '/images/not_available/not_available023.jpeg',
+  },
+  {
+    id: uuid(),
+    path: '/images/not_available/not_available025.jpeg',
+  },
+  {
+    id: uuid(),
+    path: '/images/not_available/not_available026.jpeg',
+  },
+  {
+    id: uuid(),
+    path: '/images/not_available/not_available043.jpeg',
+  },
+  {
+    id: uuid(),
+    path: '/images/not_available/not_available0109.jpeg',
+  },
+  {
+    id: uuid(),
+    path: '/images/not_available/not_available0123.jpeg',
+  },
+  {
+    id: uuid(),
+    path: '/images/not_available/not_available0129.jpeg',
+  },
+  {
+    id: uuid(),
+    path: '/images/not_available/not_available0156.jpeg',
+  },
+  {
+    id: uuid(),
+    path: '/images/not_available/not_available173.jpeg',
+  },
+  {
+    id: uuid(),
+    path: '/images/not_available/not_available0198.jpeg',
+  },
+  {
+    id: uuid(),
+    path: '/images/not_available/not_available0231.jpeg',
+  },
+  {
+    id: uuid(),
+    path: '/images/not_available/not_available0234.jpeg',
+  },
+  {
+    id: uuid(),
+    path: '/images/not_available/not_available238.jpeg',
+  },
+  {
+    id: uuid(),
+    path: '/images/not_available/not_available0983.jpeg',
+  },
+  {
+    id: uuid(),
+    path: '/images/not_available/not_available01382.jpeg',
+  },
+  {
+    id: uuid(),
+    path: '/images/not_available/not_available02312.jpeg',
+  },
+  {
+    id: uuid(),
+    path: '/images/not_available/not_available02342.jpeg',
+  },
+  {
+    id: uuid(),
+    path: '/images/not_available/not_available2384.jpeg',
+  },
+  {
+    id: uuid(),
+    path: '/images/not_available/not_available2736.jpeg',
+  },
+  {
+    id: uuid(),
+    path: '/images/not_available/not_available2912.jpeg',
+  },
+  {
+    id: uuid(),
+    path: '/images/not_available/not_available2983.jpeg',
+  },
+  {
+    id: uuid(),
+    path: '/images/not_available/not_available3231.jpeg',
+  },
+];
+
+export const availablePictures = [
+  {
+    id: uuid(),
+    path: '/images/available/available2329.jpeg',
+    name: 'Earth',
+    dimensions: '760x760',
+    price: 1600,
+  },
+  {
+    id: uuid(),
     name: 'Flax',
     dimensions: '550x550',
     path: '/images/available/available003.jpeg',
     price: 650,
-    available: true,
   },
   {
-    id: 4,
+    id: uuid(),
     name: 'Deep ocean',
     dimensions: '760x760',
     path: '/images/available/available001.jpeg',
     price: 950,
-    available: true,
   },
   {
-    id: 5,
+    id: uuid(),
     name: 'Eucalyptus',
     dimensions: '760x1020',
     path: '/images/available/available009.jpeg',
     price: 1100,
-    available: true,
   },
   {
-    id: 6,
-    name: 'Voyage',
-    dimensions: '500x500',
-    path: '/images/available/available005.jpeg',
-    price: 750,
-    available: true,
-  },
-  {
-    id: 7,
-    name: 'Forest',
-    dimensions: '355x455',
-    path: '/images/available/available008.jpeg',
-    price: 650,
-    available: true,
-  },
-  {
-    id: 8,
-    name: 'NZ rock wren',
-    dimensions: '500x500',
-    path: '/images/available/available006.jpeg',
-    price: 850,
-    available: true,
-  },
-  {
-    id: 9,
-    name: 'Organic light',
-    dimensions: '760x760',
-    path: '/images/available/available002.jpeg',
-    price: 1200,
-    available: true,
-  },
-  {
-    id: 10,
+    id: uuid(),
     name: 'Deep mountain',
     dimensions: '450x450',
     path: '/images/available/available014.jpeg',
     price: 550,
-    available: true,
   },
   {
-    id: 11,
-    name: 'Vibrancy',
-    dimensions: '350x400',
-    path: '/images/available/available015.jpg',
-    price: 850,
-    available: true,
-  },
-  {
-    id: 12,
-    name: 'Beginnings',
-    dimensions: '760x1020',
-    path: '/images/available/available010.jpeg',
-    price: 1800,
-    available: true,
-  },
-  {
-    id: 13,
+    id: uuid(),
     name: 'Pīwakawaka',
     dimensions: '355x455',
     path: '/images/available/available007.jpeg',
     price: 550,
-    available: true,
   },
   {
-    id: 14,
-    path: '/images/not-available/not-available019.jpeg',
-    available: false,
+    id: uuid(),
+    path: '/images/available/available012.jpeg',
   },
   {
-    id: 15,
-    path: '/images/not-available/not-available000.jpeg',
-    available: false,
+    id: uuid(),
+    path: '/images/available/available0129.jpeg',
   },
   {
-    id: 16,
-    path: '/images/not-available/not-available001.jpeg',
-    available: false,
+    id: uuid(),
+    path: '/images/available/available923.jpeg',
   },
   {
-    id: 17,
-    path: '/images/not-available/not-available002.jpeg',
-    available: false,
-  },
-  {
-    id: 18,
-    path: '/images/not-available/not-available003.jpeg',
-    available: false,
-  },
-  {
-    id: 19,
-    path: '/images/not-available/not-available004.jpeg',
-    available: false,
-  },
-  {
-    id: 20,
-    path: '/images/not-available/not-available005.jpeg',
-    available: false,
-  },
-  {
-    id: 21,
-    path: '/images/not-available/not-available006.jpeg',
-    available: false,
-  },
-  {
-    id: 22,
-    path: '/images/not-available/not-available007.jpeg',
-    available: false,
-  },
-  {
-    id: 23,
-    path: '/images/not-available/not-available008.jpeg',
-    available: false,
-  },
-  {
-    id: 24,
-    path: '/images/not-available/not-available009.jpeg',
-    available: false,
-  },
-  {
-    id: 25,
-    path: '/images/not-available/not-available010.jpeg',
-    available: false,
-  },
-  {
-    id: 26,
-    path: '/images/not-available/not-available011.jpeg',
-    available: false,
-  },
-  {
-    id: 27,
-    path: '/images/not-available/not-available012.jpeg',
-    available: false,
-  },
-  {
-    id: 28,
-    path: '/images/not-available/not-available013.jpeg',
-    available: false,
-  },
-  {
-    id: 29,
-    path: '/images/not-available/not-available014.jpeg',
-    available: false,
-  },
-  {
-    id: 30,
-    path: '/images/not-available/not-available015.jpg',
-    available: false,
-  },
-  {
-    id: 31,
-    path: '/images/not-available/not-available016.jpg',
-    available: false,
-  },
-  {
-    id: 32,
-    path: '/images/not-available/not-available017.jpg',
-    available: false,
-  },
-  {
-    id: 33,
-    path: '/images/not-available/not-available018.jpg',
-    available: false,
+    id: uuid(),
+    path: '/images/available/available9873.jpeg',
   },
 ];
+
+export const allPictures = availablePictures.concat(notAvailablePictures);
 
 // contact form errors
 const nameError = 'Your first name should be entered so I know who you are.';

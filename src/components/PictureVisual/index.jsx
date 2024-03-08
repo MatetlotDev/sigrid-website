@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 // import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 // import Button from '../../components/Button';
-import { pictures } from '../../constants';
+import { availablePictures } from '../../constants';
 import {
   nextImg,
   prevImg,
@@ -49,21 +49,9 @@ const Section = styled.section`
   }
   .prev-icon {
     left: 0;
-    ${({ disablePrev }) =>
-      disablePrev &&
-      `
-      opacity: .5;
-      pointer-events: none;
-    `}
   }
   .next-icon {
     right: 0;
-    ${({ disableNext }) =>
-      disableNext &&
-      `
-      opacity: .5;
-      pointer-events: none;
-    `}
   }
   .contact-button {
     position: absolute;
@@ -133,8 +121,7 @@ function PictureVisual() {
   const open = useSelector(selectOpen);
   const actualImg = useSelector(selectActualImg);
 
-  const isLastImg = actualImg && actualImg.id === pictures.length - 1;
-  const isFirstImg = actualImg && actualImg.id === 0;
+  const isAvailable = availablePictures.includes(actualImg);
 
   // const contactButtonClick = () => {
   //   navigate('/contact');
@@ -142,31 +129,31 @@ function PictureVisual() {
   // };
 
   return (
-    <Section open={open} disableNext={isLastImg} disablePrev={isFirstImg}>
+    <Section open={open}>
       <Backdrop onClick={() => dispatch(setImg(null))} />
       <div className="icon close-icon">
         <TfiClose onClick={() => dispatch(setImg(null))} />
       </div>
       <div className="icon next-icon">
-        <SlArrowRight onClick={() => !isLastImg && dispatch(nextImg())} />
+        <SlArrowRight onClick={() => dispatch(nextImg())} />
       </div>
       <div className="icon prev-icon">
-        <SlArrowLeft onClick={() => !isFirstImg && dispatch(prevImg())} />
+        <SlArrowLeft onClick={() => dispatch(prevImg())} />
       </div>
       <PictureWrapper>
         {actualImg && (
-          <img src={actualImg.path} alt="sigrig painting in bigger view" />
-        )}
-        {actualImg && actualImg.available && (
-          <div className="flex">
-            <div>
-              <p>{actualImg.name}</p>
-              <span>
-                {actualImg.dimensions} - {actualImg.available && 'Available'}
-              </span>
-              <span>{actualImg.price} NZ$</span>
+          <>
+            <img src={actualImg.path} alt="sigrig painting in bigger view" />
+            <div className="flex">
+              <div>
+                <p>{actualImg?.name}</p>
+                <span>
+                  {actualImg.dimensions && actualImg.dimensions + ' - '}
+                  {isAvailable && 'Available'}
+                </span>
+              </div>
             </div>
-          </div>
+          </>
         )}
       </PictureWrapper>
       {/* <Button

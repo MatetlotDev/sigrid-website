@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import Button from '../../components/Button';
 import Quote from '../../components/Quote';
-import { pictures } from '../../constants';
+import { availablePictures, notAvailablePictures } from '../../constants';
 import { setImg } from '../../store/globalSlice';
 
 const Section = styled.section`
@@ -94,24 +94,27 @@ function Discover() {
           )}
         </PInfos>
         <Pictures>
-          {pictures
-            .filter((pic) => pic.available === sortPictures)
-            .map((pic, idx) => (
-              <ImageWrapper idx={idx} key={pic.id}>
-                <img
-                  onClick={() => dispatch(setImg({ imgId: pic.id }))}
-                  src={pic.path}
-                  alt="paint"
-                />
-                {sortPictures && (
-                  <>
-                    <p>{pic.name}</p>
-                    <span>{pic.dimensions} - Available</span>
-                    <span>{pic.price} NZ$</span>
-                  </>
-                )}
-              </ImageWrapper>
-            ))}
+          {sortPictures
+            ? availablePictures.map((pic, idx) => (
+                <ImageWrapper idx={idx} key={pic.id}>
+                  <img
+                    onClick={() => dispatch(setImg({ imgId: pic.id }))}
+                    src={pic.path}
+                    alt="paint"
+                  />
+                  <p>{pic?.name}</p>
+                  <span>{pic.dimensions && `${pic?.dimensions} -`} Available</span>
+                </ImageWrapper>
+              ))
+            : notAvailablePictures.map((pic, idx) => (
+                <ImageWrapper idx={idx} key={pic.id}>
+                  <img
+                    onClick={() => dispatch(setImg({ imgId: pic.id }))}
+                    src={pic.path}
+                    alt="paint"
+                  />
+                </ImageWrapper>
+              ))}
         </Pictures>
       </Section>
     </>

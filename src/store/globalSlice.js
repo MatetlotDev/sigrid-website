@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { pictures } from '../constants';
+import { allPictures } from '../constants';
 
 const initialState = {
   open: false,
@@ -15,15 +15,27 @@ export const globalSlice = createSlice({
     },
     setImg: (state, { payload }) => {
       state.actualImg = payload
-        ? pictures.find((pic) => pic.id === payload.imgId)
+        ? allPictures.find((pic) => pic.id === payload.imgId)
         : null;
       state.open = !state.open;
     },
     nextImg: (state) => {
-      state.actualImg = pictures[state.actualImg.id + 1];
+      const currentImgIdx = allPictures.findIndex(
+        (img) => state.actualImg.id === img.id
+      );
+      const isLast = allPictures.length - 1 === currentImgIdx;
+
+      if (isLast) state.actualImg = allPictures[0];
+      else state.actualImg = allPictures[currentImgIdx + 1];
     },
     prevImg: (state) => {
-      state.actualImg = pictures[state.actualImg.id - 1];
+      const currentImgIdx = allPictures.findIndex(
+        (img) => state.actualImg.id === img.id
+      );
+      const isFirst = currentImgIdx === 0;
+
+      if (isFirst) state.actualImg = allPictures[allPictures.length - 1];
+      else state.actualImg = allPictures[currentImgIdx - 1];
     },
   },
 });
