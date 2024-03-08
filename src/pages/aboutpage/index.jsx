@@ -72,7 +72,8 @@ export const Description = styled.article`
       margin-bottom: 30px;
       text-align: start;
     }
-    blockquote, h1 {
+    blockquote,
+    h1 {
       text-align: center;
     }
     h1 {

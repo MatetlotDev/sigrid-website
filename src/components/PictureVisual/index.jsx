@@ -12,6 +12,7 @@ import {
   selectOpen,
   setImg,
 } from '../../store/globalSlice';
+import ProgressiveImg from '../ProgressiveImg';
 
 const Section = styled.section`
   display: ${({ open }) => (open ? 'block' : 'none')};
@@ -151,7 +152,10 @@ function PictureVisual() {
       <PictureWrapper>
         {actualImg && (
           <>
-            <img src={actualImg.path} alt="sigrig painting in bigger view" />
+            <ProgressiveImg
+              src={actualImg.path}
+              alt="sigrig painting in bigger view"
+            />
             <div className="flex">
               <div className="absolute">
                 <p>{actualImg?.name}</p>

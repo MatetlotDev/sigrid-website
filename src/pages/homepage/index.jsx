@@ -2,6 +2,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Button from '../../components/Button';
+import ProgressiveImg from '../../components/ProgressiveImg';
 import Quote from '../../components/Quote';
 import { allPictures, mobileWidth, tabletSmallWidth } from '../../constants';
 import { setImg } from '../../store/globalSlice';
@@ -26,26 +27,29 @@ const PicturesGrid = styled.div`
     grid-template-columns: repeat(1, 1fr);
   }
 `;
-const Image = styled.img`
-  width: 35vmin;
-  height: 35vmin;
-  object-fit: cover;
-  margin: 0 15px;
-  cursor: pointer;
-
-  @media ${({ theme }) => theme.sizes.tablet} {
-    width: 25vmin;
-    height: 25vmin;
-  }
-  @media ${({ theme }) => theme.sizes.tabletS} {
+const ImageWrapper = styled.div`
+  img {
     width: 35vmin;
     height: 35vmin;
-  }
-  @media ${({ theme }) => theme.sizes.mobile} {
-    width: 70vmin;
-    height: 70vmin;
+    object-fit: cover;
+    margin: 0 15px;
+    cursor: pointer;
+
+    @media ${({ theme }) => theme.sizes.tablet} {
+      width: 25vmin;
+      height: 25vmin;
+    }
+    @media ${({ theme }) => theme.sizes.tabletS} {
+      width: 35vmin;
+      height: 35vmin;
+    }
+    @media ${({ theme }) => theme.sizes.mobile} {
+      width: 70vmin;
+      height: 70vmin;
+    }
   }
 `;
+
 const About = styled.section`
   display: flex;
   flex-direction: column;
@@ -137,12 +141,13 @@ function Home() {
       <PicturesGrid>
         {randomPicturesIds.map((picId) => {
           return (
-            <Image
-              onClick={() => dispatch(setImg({ imgId: picId }))}
-              key={picId}
-              src={allPictures.filter((picture) => picture.id === picId)[0].path}
-              alt="painting"
-            />
+            <ImageWrapper key={picId}>
+              <ProgressiveImg
+                onClick={() => dispatch(setImg({ imgId: picId }))}
+                src={allPictures.filter((picture) => picture.id === picId)[0].path}
+                alt="painting"
+              />
+            </ImageWrapper>
           );
         })}
       </PicturesGrid>

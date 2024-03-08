@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import Button from '../../components/Button';
+import ProgressiveImg from '../../components/ProgressiveImg';
 import Quote from '../../components/Quote';
 import { availablePictures, notAvailablePictures } from '../../constants';
 import { setImg } from '../../store/globalSlice';
@@ -97,10 +98,10 @@ function Discover() {
           {sortPictures
             ? availablePictures.map((pic, idx) => (
                 <ImageWrapper idx={idx} key={pic.id}>
-                  <img
+                  <ProgressiveImg
                     onClick={() => dispatch(setImg({ imgId: pic.id }))}
                     src={pic.path}
-                    alt="paint"
+                    alt="painting"
                   />
                   <p>{pic?.name}</p>
                   <span>{pic.dimensions && `${pic?.dimensions} -`} Available</span>
@@ -108,7 +109,7 @@ function Discover() {
               ))
             : notAvailablePictures.map((pic, idx) => (
                 <ImageWrapper idx={idx} key={pic.id}>
-                  <img
+                  <ProgressiveImg
                     onClick={() => dispatch(setImg({ imgId: pic.id }))}
                     src={pic.path}
                     alt="paint"
