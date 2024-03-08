@@ -101,10 +101,18 @@ const PictureWrapper = styled.div`
     display: flex;
     justify-content: space-between;
     width: 100%;
+    position: relative;
+
+    .absolute {
+      position: absolute;
+      bottom: 30px;
+      left: -50px;
+      transform: translateX(-100%);
+    }
   }
   img {
     max-width: 70vw;
-    max-height: 70vh;
+    max-height: 100vh;
   }
 
   @media ${({ theme }) => theme.sizes.tabletS} {
@@ -145,10 +153,11 @@ function PictureVisual() {
           <>
             <img src={actualImg.path} alt="sigrig painting in bigger view" />
             <div className="flex">
-              <div>
+              <div className="absolute">
                 <p>{actualImg?.name}</p>
                 <span>
-                  {actualImg.dimensions && actualImg.dimensions + ' - '}
+                  {actualImg.dimensions && actualImg.dimensions}
+                  {actualImg.dimensions && isAvailable && ' - '}
                   {isAvailable && 'Available'}
                 </span>
               </div>
