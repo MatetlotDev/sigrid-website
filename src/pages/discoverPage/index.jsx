@@ -1,29 +1,14 @@
-import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import Button from '../../components/Button';
 import ProgressiveImg from '../../components/ProgressiveImg';
 import Quote from '../../components/Quote';
-import { availablePictures, notAvailablePictures } from '../../constants';
+import { allPictures } from '../../constants';
 import { setImg } from '../../store/globalSlice';
 
 const Section = styled.section`
-  padding: 5vw 10vw;
+  padding: 0 10vw 5vw 10vw;
   width: 100vw;
   max-width: 100vw;
-`;
-const Buttons = styled.div`
-  display: flex;
-  align-items: center;
-`;
-const PInfos = styled.p`
-  font-family: 'Cormorant', serif;
-  font-size: 1.4rem;
-  margin: 2vw 0;
-
-  a {
-    color: black;
-  }
 `;
 const Pictures = styled.section`
   display: grid;
@@ -62,7 +47,6 @@ const ImageWrapper = styled.div`
 
 function Discover() {
   const dispatch = useDispatch();
-  const [sortPictures, setSortPictures] = useState(true);
 
   return (
     <>
@@ -70,52 +54,18 @@ function Discover() {
         <blockquote>&ldquo;Art is for me a living process.&rdquo;</blockquote>
       </Quote>
       <Section>
-        <Buttons>
-          <Button
-            label="Available"
-            outlined
-            size={1.35}
-            onClick={() => setSortPictures(true)}
-            border={sortPictures}
-          />
-          <Button
-            label="Not Available"
-            outlined
-            size={1.35}
-            onClick={() => setSortPictures(false)}
-            border={!sortPictures}
-          />
-        </Buttons>
-        <PInfos>
-          {sortPictures && (
-            <span>
-              All these paints are available for purchase, contact me if you are
-              interested.
-            </span>
-          )}
-        </PInfos>
         <Pictures>
-          {sortPictures
-            ? availablePictures.map((pic, idx) => (
-                <ImageWrapper idx={idx} key={pic.id}>
-                  <ProgressiveImg
-                    onClick={() => dispatch(setImg({ imgId: pic.id }))}
-                    src={pic.path}
-                    alt="painting"
-                  />
-                  <p>{pic?.name}</p>
-                  <span>{pic.dimensions && `${pic?.dimensions} -`} Available</span>
-                </ImageWrapper>
-              ))
-            : notAvailablePictures.map((pic, idx) => (
-                <ImageWrapper idx={idx} key={pic.id}>
-                  <ProgressiveImg
-                    onClick={() => dispatch(setImg({ imgId: pic.id }))}
-                    src={pic.path}
-                    alt="paint"
-                  />
-                </ImageWrapper>
-              ))}
+          {allPictures.map((pic, idx) => (
+            <ImageWrapper idx={idx} key={pic.id}>
+              <ProgressiveImg
+                onClick={() => dispatch(setImg({ imgId: pic.id }))}
+                src={pic.path}
+                alt="painting"
+              />
+              <p>{pic?.name}</p>
+              <span>{pic.dimensions}</span>
+            </ImageWrapper>
+          ))}
         </Pictures>
       </Section>
     </>

@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 // import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 // import Button from '../../components/Button';
-import { availablePictures } from '../../constants';
 import {
   nextImg,
   prevImg,
@@ -126,16 +125,8 @@ const PictureWrapper = styled.div`
 
 function PictureVisual() {
   const dispatch = useDispatch();
-  // const navigate = useNavigate();
   const open = useSelector(selectOpen);
   const actualImg = useSelector(selectActualImg);
-
-  const isAvailable = availablePictures.includes(actualImg);
-
-  // const contactButtonClick = () => {
-  //   navigate('/contact');
-  //   dispatch(setOpen(false));
-  // };
 
   return (
     <Section open={open}>
@@ -159,25 +150,12 @@ function PictureVisual() {
             <div className="flex">
               <div className="absolute">
                 <p>{actualImg?.name}</p>
-                <span>
-                  {actualImg.dimensions && actualImg.dimensions}
-                  {actualImg.dimensions && isAvailable && ' - '}
-                  {isAvailable && 'Available'}
-                </span>
+                <span>{actualImg.dimensions}</span>
               </div>
             </div>
           </>
         )}
       </PictureWrapper>
-      {/* <Button
-          className="contact-button"
-          label="contact"
-          color="#FFF"
-          outlined
-          border
-          size={1.2}
-          onClick={contactButtonClick}
-        /> */}
     </Section>
   );
 }

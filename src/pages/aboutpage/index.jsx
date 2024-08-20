@@ -86,16 +86,16 @@ function About() {
   return (
     <Section>
       <ProfilePic>
-        <img src="/images/profile-pic.jpeg" alt="picture of sigrid" />
-        <span>Sigrid Freyens, 2022</span>
+        <img src="/images/profile-pic.jpg" alt="picture of sigrid" />
+        <span>Sigrid Freyens, 2024</span>
       </ProfilePic>
       <Description>
         <blockquote>&ldquo;Painting is energy made visible&rdquo;</blockquote>
         <br />
         <p>
           Sigrid Freyens is an African-born, Belgian artist who lives in Taranaki and
-          whose paintings have been featured in solo and group exhibitions in
-          Belgium.
+          whose paintings have been featured in solo and group exhibitions in Belgium
+          and in New Zealand.
         </p>
         <br />
         <p>

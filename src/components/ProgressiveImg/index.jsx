@@ -15,7 +15,7 @@ export default function ProgressiveImg({
     img.onload = () => {
       setImgSrc(src);
     };
-  }, []);
+  }, [src]);
 
   return (
     <img
@@ -24,8 +24,12 @@ export default function ProgressiveImg({
       alt={alt}
       style={
         placeholderSrc && imgSrc === placeholderSrc
-          ? { filter: 'blur(10px)', clipPath: 'inset(0)' }
-          : { filter: 'blur(0px)', transition: 'filter 0.5s linear' }
+          ? { filter: 'blur(10px)', clipPath: 'inset(0)', userSelect: 'none' }
+          : {
+              filter: 'blur(0px)',
+              transition: 'filter 0.5s linear',
+              userSelect: 'none',
+            }
       }
     />
   );

@@ -25,6 +25,8 @@ export const globalSlice = createSlice({
       );
       const isLast = allPictures.length - 1 === currentImgIdx;
 
+      state.actualImg = null;
+
       if (isLast) state.actualImg = allPictures[0];
       else state.actualImg = allPictures[currentImgIdx + 1];
     },

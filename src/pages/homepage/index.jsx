@@ -184,7 +184,7 @@ function Home() {
           border
         />
         <div className="flex">
-          <img src="/images/profile-pic.jpeg" alt="Picture of sigrid" />
+          <img src="/images/profile-pic.jpg" alt="Picture of sigrid" />
           <div className="text">
             <h2>Sigrid Freyens</h2>
             <AboutText />
