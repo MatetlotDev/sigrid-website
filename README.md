@@ -2,7 +2,7 @@
 
 ## Description
 
-This is a very simple project, the idea is just to make a very simple website to showcase the paintings of Sigrid. 
+This is a very simple project, the idea is just to make a very simple website to showcase the paintings of Sigrid.
 
 The website does not have a lot of features and is in continuous devlopment.
 

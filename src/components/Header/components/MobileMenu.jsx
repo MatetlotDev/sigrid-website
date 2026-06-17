@@ -82,7 +82,11 @@ const MobileMenu = ({ open, setOpen }) => {
           {routes.map(
             (route) =>
               route.inHeader && (
-                <Link key={route.path} to={route.path} onClick={() => setOpen(false)}>
+                <Link
+                  key={route.path}
+                  to={route.path}
+                  onClick={() => setOpen(false)}
+                >
                   <li>{route.name}</li>
                 </Link>
               )
