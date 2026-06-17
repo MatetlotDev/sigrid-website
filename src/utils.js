@@ -9,7 +9,7 @@ export const loadState = (key) => {
       return undefined;
     }
     return JSON.parse(serializedState);
-  } catch (err) {
+  } catch {
     return undefined;
   }
 };
@@ -22,7 +22,7 @@ export const saveState = (key, state) => {
       ...state,
     });
     localStorage.setItem(key, serializedState);
-  } catch (err) {
+  } catch {
     // Ignore write errors.
   }
 };
