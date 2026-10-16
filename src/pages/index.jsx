@@ -1,10 +1,12 @@
 import { Analytics } from '@vercel/analytics/react';
-import { useCallback, useEffect, useState } from 'react';
-import { Outlet, useLocation } from 'react-router-dom';
-import BackToTop from '../components/BackToTop';
+import { Outlet } from 'react-router-dom';
+import Cursor from '../components/Cursor';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import PictureVisual from '../components/PictureVisual';
+import Splash from '../components/Splash';
+import { allPictures } from '../constants';
+import { TransitionProvider } from '../motion/transition';
 import About from './aboutpage';
 // import Contact from './contactPage';
 import Discover from './discoverPage';
@@ -41,45 +43,27 @@ export const routes = [
   // },
 ];
 
-const Root = () => {
-  const location = useLocation();
+const transitionLabels = Object.fromEntries(
+  routes.map((route) => [route.path, route.name])
+);
 
-  const [backBtnVisible, setBackBtnVisible] = useState(false);
+const splashImages = [
+  ...allPictures.filter((picture) => picture.name).map((picture) => picture.path),
+  '/images/profile-pic.jpg',
+];
 
-  const handleScroll = useCallback(() => {
-    if (window.pageYOffset > 1000) setBackBtnVisible(true);
-    else setBackBtnVisible(false);
-  }, [setBackBtnVisible]);
-
-  const handleBackToTop = (behavior) => {
-    window.scrollTo({
-      top: 0,
-      behavior: behavior ? behavior : 'auto',
-    });
-  };
-
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, [handleScroll]);
-
-  useEffect(() => {
-    handleBackToTop();
-  }, [location]);
-
-  return (
+const Root = () => (
+  <TransitionProvider labels={transitionLabels}>
+    <Analytics />
+    <Splash images={splashImages} />
+    <Header />
     <main>
-      <Analytics />
-      <Header />
       <Outlet />
-      <PictureVisual />
-      <BackToTop visible={backBtnVisible} onClick={handleBackToTop} />
-      <Footer />
     </main>
-  );
-};
+    <PictureVisual />
+    <Footer />
+    <Cursor />
+  </TransitionProvider>
+);
 
 export default Root;

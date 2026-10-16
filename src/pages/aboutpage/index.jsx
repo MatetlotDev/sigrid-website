@@ -1,135 +1,116 @@
 import styled from 'styled-components';
+import Artwork from '../../components/Artwork';
+import { FadeUp, Parallax, SplitReveal } from '../../components/Reveal';
 
-export const Section = styled.section`
-  display: flex;
-  padding: 3vw;
-  width: 100vw;
-  max-width: 100vw;
-  min-height: 78vh;
+const Section = styled.section`
+  padding: clamp(130px, 16vw, 220px) clamp(20px, 3vw, 48px) clamp(80px, 12vw, 180px);
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: clamp(16px, 2vw, 32px);
 
-  @media ${({ theme }) => theme.sizes.tablet} {
-    display: block;
-    height: fit-content;
-    max-height: fit-content;
-    padding: 8vw;
-  }
-`;
-export const ProfilePic = styled.div`
-  width: 50%;
-  img {
-    min-width: 300px;
-    width: 25vw;
-    margin: 2vw 5vw 1vw 5vw;
-  }
-  span {
-    display: block;
-    margin-left: 5vw;
-    font-family: 'Cormorant', serif;
-    font-size: 1.4rem;
-    min-width: max-content;
-  }
-  p {
-    font-family: 'Cinzel', serif;
-    margin-left: 5vw;
-    font-size: 2rem;
-  }
-  @media ${({ theme }) => theme.sizes.tablet} {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 10vw;
-    img {
-      width: 60vw;
-    }
-  }
-`;
-export const Description = styled.article`
-  max-width: 800px;
-  margin-right: 2vw;
-  min-height: max-content;
   h1 {
-    font-weight: 300;
-    font-size: 3rem;
+    grid-column: 1 / -1;
     font-family: 'Cinzel', serif;
-    margin-bottom: 2vw;
+    font-weight: 400;
+    font-size: clamp(3rem, 10vw, 11rem);
+    line-height: 0.85;
+    margin-bottom: clamp(50px, 8vw, 130px);
   }
-  blockquote {
-    font-family: 'Cinzel', serif;
-    font-size: 2rem;
+
+  .portrait {
+    grid-column: 1 / 6;
+    position: sticky;
+    top: 120px;
+    align-self: start;
+
+    .frame {
+      aspect-ratio: 4 / 5;
+    }
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    span {
+      display: block;
+      margin-top: 12px;
+      font-size: 1.05rem;
+      opacity: 0.6;
+    }
   }
-  p {
-    font-family: 'Cormorant', serif;
-    font-size: 1.5rem;
-    text-align: justify;
-  }
-  @media ${({ theme }) => theme.sizes.tablet} {
-    display: flex;
-    flex-direction: column;
-    margin: 0 auto;
-    p,
+
+  article {
+    grid-column: 7 / 13;
+
     blockquote {
-      margin-bottom: 30px;
-      text-align: start;
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1.8rem, 3vw, 3rem);
+      line-height: 1.15;
+      margin-bottom: clamp(40px, 5vw, 80px);
     }
-    blockquote,
-    h1 {
-      text-align: center;
+    p {
+      font-size: clamp(1.2rem, 1.5vw, 1.6rem);
+      line-height: 1.45;
+      margin-bottom: 1.2em;
     }
-    h1 {
-      font-size: 2rem;
+    p.lead {
+      font-size: clamp(1.6rem, 2.4vw, 2.4rem);
+      font-weight: 300;
+      line-height: 1.2;
+    }
+  }
+
+  @media ${({ theme }) => theme.sizes.tabletS} {
+    .portrait,
+    article {
+      grid-column: 1 / -1;
+      position: static;
+    }
+    article {
+      margin-top: 48px;
     }
   }
 `;
+
+const paragraphs = [
+  'From a very young age, Sigrid has been driven by an unconscious search to connect with her environment through painting and drawing.',
+  '“I see life as vibrant energy in constant motion. I feel colours and energy and give them shape, building a bridge between the inner and outer world. A process inspired by the moment, led by intuition and curiosity, highly inspired by nature.”',
+  'Although her artistic expression has evolved over time, her love for creation remains constant.',
+  '“Beauty is everywhere, I love to play with organic forms and earthy textures, layering colours... I have a constant thirst for exploration. Art is an adventure full of mystery, frustration and great happiness!”',
+];
 
 function About() {
   return (
     <Section>
-      <ProfilePic>
-        <img src="/images/profile-pic.jpg" alt="picture of sigrid" />
-        <span>Sigrid Freyens, 2024</span>
-      </ProfilePic>
-      <Description>
-        <blockquote>&ldquo;Painting is energy made visible&rdquo;</blockquote>
-        <br />
-        <p>
+      <SplitReveal as="h1" by="chars">
+        About
+      </SplitReveal>
+      <div className="portrait">
+        <Parallax className="frame" speed={4}>
+          <Artwork src="/images/profile-pic.jpg" alt="Portrait of Sigrid Freyens" />
+        </Parallax>
+        <FadeUp as="span">Sigrid Freyens, 2024</FadeUp>
+      </div>
+      <article>
+        <SplitReveal as="blockquote">
+          &ldquo;Painting is energy made visible&rdquo;
+        </SplitReveal>
+        <SplitReveal as="p" className="lead">
           Sigrid Freyens is an African-born, Belgian artist who lives in Taranaki and
           whose paintings have been featured in solo and group exhibitions in Belgium
           and in New Zealand.
-        </p>
-        <br />
-        <p>
+        </SplitReveal>
+        <SplitReveal as="p">
           She describes her artistic expression as &ldquo;a living process.&rdquo;
-        </p>
-        <br />
-        <p>
           &ldquo;I believe that art is not only a way to express ourselves, but also
           a unique key to unlock the knowledge of the hidden world.&rdquo;
-        </p>
-        <br />
-        <p>
-          From a very young age , Sigrid has been driven by an unconscious search to
-          connect with her environment through painting and drawing.
-        </p>
-        <br />
-        <p>
-          &ldquo;I see life as vibrant energy in constant motion. I feel colours and
-          energy and give them shape, building a bridge between the inner and outer
-          world. A process inspired by the moment, led by intuition and curiosity,
-          highly inspired by nature.&rdquo;
-        </p>
-        <br />
-        <p>
-          Although her artistic expression has evolved over time, her love for
-          creation remains constant.
-        </p>
-        <br />
-        <p>
-          &ldquo;Beauty is everywhere, I love to play with organic forms and earthy
-          textures, layering colours... I have a constant thirst for exploration. Art
-          is an adventure full of mystery, frustration and great happiness !&rdquo;
-        </p>
-      </Description>
+        </SplitReveal>
+        {paragraphs.map((text) => (
+          <SplitReveal as="p" key={text}>
+            {text}
+          </SplitReveal>
+        ))}
+      </article>
     </Section>
   );
 }
