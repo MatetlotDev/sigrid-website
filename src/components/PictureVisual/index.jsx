@@ -1,9 +1,8 @@
-import { SlArrowLeft, SlArrowRight } from 'react-icons/sl';
-import { TfiClose } from 'react-icons/tfi';
+import { useEffect, useLayoutEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-// import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-// import Button from '../../components/Button';
+import { allPictures } from '../../constants';
+import { gsap } from '../../motion/core';
 import {
   nextImg,
   prevImg,
@@ -14,112 +13,78 @@ import {
 import ProgressiveImg from '../ProgressiveImg';
 
 const Section = styled.section`
-  display: ${({ open }) => (open ? 'block' : 'none')};
   position: fixed;
-  top: 0;
-  left: 0;
-  height: 100vh;
-  width: 100vw;
-  max-height: 100vh;
-  max-width: 100vw;
-  padding: 50px;
-  z-index: 111;
-  color: white;
+  inset: 0;
+  z-index: 700;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  padding: clamp(80px, 8vw, 110px) clamp(20px, 3vw, 48px) clamp(20px, 3vw, 40px);
+  color: ${({ theme }) => theme.colors.anthracite};
+  visibility: hidden;
 
-  & > * {
-    z-index: 11111;
-  }
-
-  .icon,
-  .icon,
-  .icon {
+  .backdrop {
     position: absolute;
-    font-size: 3rem;
-    cursor: pointer;
-    padding: 50px;
-  }
-  .close-icon {
-    top: 0;
-    right: 0;
-  }
-  .prev-icon,
-  .next-icon {
-    top: 50%;
-    transform: translateY(-50%);
-  }
-  .prev-icon {
-    left: 0;
-  }
-  .next-icon {
-    right: 0;
-  }
-  .contact-button {
-    position: absolute;
-    right: 1%;
-    bottom: 0%;
+    inset: 0;
+    background: ${({ theme }) => theme.colors.ivory};
+    transform-origin: bottom;
   }
 
-  @media ${({ theme }) => theme.sizes.tabletS} {
-    .contact-button {
-      right: 50%;
-      transform: translateX(50%);
-    }
-    .next-icon,
-    .prev-icon {
-      display: none;
+  .stage {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 0;
+    grid-row: 2;
+
+    img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      box-shadow: 0 30px 80px -40px rgba(38, 40, 38, 0.6);
     }
   }
-`;
-const Backdrop = styled.div`
-  z-index: 1111;
-  position: absolute;
-  backdrop-filter: blur(15px);
-  background: rgba(14, 14, 14, 0.75);
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-`;
-const PictureWrapper = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
 
-  span {
-    font-family: 'Cormorant', serif;
-    font-size: 1.2rem;
-    color: white;
-    display: block;
-  }
-  p {
-    font-family: 'Cinzel', serif;
-    font-size: 1.6rem;
-    display: block;
-  }
-  .flex {
+  .bar {
+    position: relative;
+    grid-row: 3;
     display: flex;
     justify-content: space-between;
-    width: 100%;
-    position: relative;
+    align-items: flex-end;
+    gap: 16px;
+    padding-top: 20px;
 
-    .absolute {
-      position: absolute;
-      bottom: 30px;
-      left: -50px;
-      transform: translateX(-100%);
+    p {
+      font-family: 'Cinzel', serif;
+      font-size: 1.2rem;
+    }
+    span {
+      font-size: 1.05rem;
+      opacity: 0.6;
     }
   }
-  img {
-    max-width: 70vw;
-    max-height: 100vh;
+
+  .controls {
+    display: flex;
+    gap: 28px;
+    font-family: 'Cinzel', serif;
+    font-size: 0.9rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+
+    button {
+      background: none;
+      border: none;
+      color: inherit;
+      font: inherit;
+      letter-spacing: inherit;
+      text-transform: inherit;
+      cursor: pointer;
+    }
   }
 
-  @media ${({ theme }) => theme.sizes.tabletS} {
-    img {
-      max-width: 95vmin;
-      max-height: 95vmin;
-    }
+  .count {
+    font-variant-numeric: tabular-nums;
   }
 `;
 
@@ -127,35 +92,90 @@ function PictureVisual() {
   const dispatch = useDispatch();
   const open = useSelector(selectOpen);
   const actualImg = useSelector(selectActualImg);
+  const root = useRef(null);
+  const index = actualImg ? allPictures.findIndex((p) => p.id === actualImg.id) : -1;
+
+  // Open / close.
+  useLayoutEffect(() => {
+    const q = gsap.utils.selector(root);
+    if (open) {
+      gsap
+        .timeline()
+        .set(root.current, { visibility: 'visible' })
+        .fromTo(
+          q('.backdrop'),
+          { scaleY: 0 },
+          { scaleY: 1, duration: 0.9, ease: 'expo.inOut' }
+        )
+        .fromTo(
+          q('.stage, .bar'),
+          { autoAlpha: 0, y: 40 },
+          { autoAlpha: 1, y: 0, duration: 1, stagger: 0.08, ease: 'expo.out' },
+          '-=0.35'
+        );
+    } else {
+      gsap
+        .timeline()
+        .to(q('.stage, .bar'), { autoAlpha: 0, duration: 0.35 })
+        .to(q('.backdrop'), {
+          scaleY: 0,
+          transformOrigin: 'top',
+          duration: 0.8,
+          ease: 'expo.inOut',
+        })
+        .set(q('.backdrop'), { transformOrigin: 'bottom' })
+        .set(root.current, { visibility: 'hidden' });
+    }
+  }, [open]);
+
+  // Slide in each new painting.
+  useLayoutEffect(() => {
+    if (!open) return;
+    gsap.fromTo(
+      root.current.querySelector('.stage img'),
+      { clipPath: 'inset(100% 0 0 0)' },
+      { clipPath: 'inset(0% 0 0 0)', duration: 1.1, ease: 'expo.out' }
+    );
+  }, [actualImg?.id, open]);
+
+  useEffect(() => {
+    if (!open) return undefined;
+    const onKey = (event) => {
+      if (event.key === 'Escape') dispatch(setImg(null));
+      if (event.key === 'ArrowRight') dispatch(nextImg());
+      if (event.key === 'ArrowLeft') dispatch(prevImg());
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [dispatch, open]);
 
   return (
-    <Section open={open}>
-      <Backdrop onClick={() => dispatch(setImg(null))} />
-      <div className="icon close-icon">
-        <TfiClose onClick={() => dispatch(setImg(null))} />
-      </div>
-      <div className="icon next-icon">
-        <SlArrowRight onClick={() => dispatch(nextImg())} />
-      </div>
-      <div className="icon prev-icon">
-        <SlArrowLeft onClick={() => dispatch(prevImg())} />
-      </div>
-      <PictureWrapper>
+    <Section ref={root} aria-hidden={!open} role="dialog" aria-modal="true">
+      <div className="backdrop" onClick={() => dispatch(setImg(null))} />
+      <div className="stage" onClick={() => dispatch(setImg(null))}>
         {actualImg && (
-          <>
-            <ProgressiveImg
-              src={actualImg.path}
-              alt="sigrig painting in bigger view"
-            />
-            <div className="flex">
-              <div className="absolute">
-                <p>{actualImg?.name}</p>
-                <span>{actualImg.dimensions}</span>
-              </div>
-            </div>
-          </>
+          <ProgressiveImg
+            key={actualImg.id}
+            src={actualImg.path}
+            alt={actualImg.name || 'Painting by Sigrid Freyens'}
+          />
         )}
-      </PictureWrapper>
+      </div>
+      <div className="bar">
+        <div>
+          <p>{actualImg?.name || 'Untitled'}</p>
+          <span>{actualImg?.dimensions}</span>
+        </div>
+        <div className="controls">
+          <button onClick={() => dispatch(prevImg())}>Prev</button>
+          <span className="count">
+            {String(index + 1).padStart(2, '0')} /{' '}
+            {String(allPictures.length).padStart(2, '0')}
+          </span>
+          <button onClick={() => dispatch(nextImg())}>Next</button>
+          <button onClick={() => dispatch(setImg(null))}>Close</button>
+        </div>
+      </div>
     </Section>
   );
 }

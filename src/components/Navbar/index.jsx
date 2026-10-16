@@ -1,101 +1,70 @@
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
+import { TransitionLink } from '../../motion/transition';
 import { routes } from '../../pages';
 
-const NavBarWrapper = styled.nav`
-  display: flex;
-  align-items: center;
-
-  a {
-    text-decoration: none;
-    color: ${({ theme }) => theme.colors.white};
-  }
-
-  .desktop-ul {
-    list-style: none;
-    display: flex;
-
-    li {
-      padding: 10px;
-      margin-right: 30px;
-      position: relative;
-      font-size: ${({ large }) => (large ? 17 : 13)}px;
-
-      &::after {
-        content: '';
-        height: 1px;
-        background: ${({ theme }) => theme.colors.white};
-        position: absolute;
-        width: 0;
-        bottom: 0;
-        left: 0;
-        transition: width 0.4s;
-      }
-      &:hover {
-        &::after {
-          width: 100%;
-        }
-      }
-
-      &.active {
-        font-weight: 600;
-
-        &::after {
-          width: 100%;
-        }
-      }
-    }
-  }
+// Link whose label rolls up to reveal a copy of itself on hover.
+export const RollLink = styled(TransitionLink)`
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  line-height: 1.2;
 
   span {
+    display: block;
+    transition: transform 0.7s ${({ theme }) => theme.ease.out};
+  }
+  span + span {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    min-width: max-content;
-    ${({ large }) =>
-      large
-        ? `
-        font-size: clamp(25px, 25px + 1.2vw, 41rem);
-    `
-        : `
-        font-size: clamp(16px, 16px + 1.2vw, 32rem);
-    `}
+    top: 100%;
+    left: 0;
+  }
+  &:hover span {
+    transform: translateY(-100%);
   }
 
-  @media ${({ theme }) => theme.sizes.tablet} {
-    justify-content: space-between;
-    position: static;
-    .desktop-ul {
-      display: none;
-    }
-    span {
-      position: ${({ large }) => (large ? 'static' : 'absolute')};
-    }
+  &.active::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1px;
+    background: currentColor;
   }
 `;
 
-const NavBar = ({ large, setOpen }) => {
+const List = styled.ul`
+  list-style: none;
+  display: flex;
+  gap: clamp(20px, 3vw, 48px);
+  font-family: 'Cinzel', serif;
+  font-size: 0.95rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+`;
+
+const NavBar = ({ className }) => {
   const { pathname } = useLocation();
 
   return (
-    <NavBarWrapper large={large}>
-      <ul className="desktop-ul">
-        {routes.map(
-          (route) =>
-            route.inHeader && (
-              <Link key={route.path} to={route.path}>
-                <li className={pathname === route.path ? 'active' : 'not-active'}>
-                  {route.name}
-                </li>
-              </Link>
-            )
-        )}
-      </ul>
-      <Link to="/" onClick={() => setOpen(false)}>
-        <span>Sigrid Freyens</span>
-      </Link>
-    </NavBarWrapper>
+    <nav className={className}>
+      <List>
+        {routes
+          .filter((route) => route.inHeader)
+          .map((route) => (
+            <li key={route.path}>
+              <RollLink
+                to={route.path}
+                className={pathname === route.path ? 'active' : undefined}
+              >
+                <span>{route.name}</span>
+                <span aria-hidden="true">{route.name}</span>
+              </RollLink>
+            </li>
+          ))}
+      </List>
+    </nav>
   );
 };
 

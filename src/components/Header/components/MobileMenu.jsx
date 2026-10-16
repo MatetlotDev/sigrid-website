@@ -1,98 +1,121 @@
-import { Link } from 'react-router-dom';
+import { useEffect, useRef } from 'react';
 import styled from 'styled-components';
+import { gsap } from '../../../motion/core';
+import { TransitionLink } from '../../../motion/transition';
 import { routes } from '../../../pages';
 
-const HeaderIcon = styled.div`
-  position: relative;
+const Toggle = styled.button`
   display: none;
+  position: fixed;
+  top: clamp(18px, 2.4vw, 34px);
+  right: clamp(20px, 3vw, 48px);
+  z-index: 860;
+  background: none;
+  border: none;
+  font-family: 'Cinzel', serif;
+  font-size: 0.95rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: ${({ theme }) => theme.colors.ivory};
+  mix-blend-mode: difference;
+  cursor: pointer;
 
-  div {
-    width: 50px;
-    height: 2px;
-    background-color: ${({ theme }) => theme.colors.white};
-    margin: 13px 0;
-    transition: all 0.5s ease-out;
-    ${({ open }) => {
-      if (open)
-        return `
-            transform: rotate(45deg);
-            
-            &:nth-child(1) {
-                position: absolute;
-                transform: rotate(-45deg);
-            }
-        `;
-      return null;
-    }}
-  }
-
-  @media ${({ theme }) => theme.sizes.tablet} {
+  @media ${({ theme }) => theme.sizes.tabletS} {
     display: block;
   }
 `;
-const MenuWrapper = styled.menu`
-  display: flex;
+
+const Panel = styled.div`
   position: fixed;
-  background: ${({ theme }) => theme.colors.black};
-  top: 11.8vh;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  color: ${({ theme }) => theme.colors.white};
+  inset: 0;
+  z-index: 850;
+  background: ${({ theme }) => theme.colors.anthracite};
+  color: ${({ theme }) => theme.colors.ivory};
+  clip-path: inset(0 0 100% 0);
+  display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transition: all 0.5s;
-  pointer-events: none;
-  ${({ open }) =>
-    open &&
-    `
-    opacity: 1;
-    z-index: 1234;
-    pointer-events: all;
-  `}
+  justify-content: flex-end;
+  padding: 0 24px 15vh;
+  visibility: hidden;
 
   ul {
     list-style: none;
-    font-size: 55px;
-
-    li {
-      margin: 90px;
-    }
-    a {
-      text-decoration: none;
-      color: ${({ theme }) => theme.colors.white};
-    }
-    a:active {
-      font-weight: 600;
-    }
+  }
+  li {
+    overflow: hidden;
+  }
+  a {
+    display: block;
+    font-family: 'Cinzel', serif;
+    font-size: clamp(3rem, 14vw, 5rem);
+    line-height: 1.1;
+  }
+  p {
+    margin-top: 40px;
+    font-family: 'Cormorant', serif;
+    font-style: italic;
+    font-size: 1.3rem;
+    opacity: 0.6;
   }
 `;
 
 const MobileMenu = ({ open, setOpen }) => {
+  const panel = useRef(null);
+
+  useEffect(() => {
+    const q = gsap.utils.selector(panel);
+    if (open) {
+      gsap
+        .timeline()
+        .set(panel.current, { visibility: 'visible' })
+        .to(panel.current, {
+          clipPath: 'inset(0 0 0% 0)',
+          duration: 0.9,
+          ease: 'expo.inOut',
+        })
+        .fromTo(
+          q('a'),
+          { yPercent: 110 },
+          { yPercent: 0, duration: 1, stagger: 0.07, ease: 'expo.out' },
+          '-=0.4'
+        )
+        .fromTo(q('p'), { opacity: 0 }, { opacity: 0.6, duration: 0.6 }, '-=0.6');
+    } else {
+      gsap
+        .timeline()
+        .to(panel.current, {
+          clipPath: 'inset(0 0 100% 0)',
+          duration: 0.8,
+          ease: 'expo.inOut',
+        })
+        .set(panel.current, { visibility: 'hidden' });
+    }
+  }, [open]);
+
   return (
     <>
-      <HeaderIcon onClick={() => setOpen(!open)} open={open}>
-        <div />
-        <div />
-      </HeaderIcon>
-      <MenuWrapper open={open}>
+      <Toggle onClick={() => setOpen(!open)} aria-expanded={open}>
+        {open ? 'Close' : 'Menu'}
+      </Toggle>
+      <Panel ref={panel}>
         <ul>
-          {routes.map(
-            (route) =>
-              route.inHeader && (
-                <Link
-                  key={route.path}
-                  to={route.path}
-                  onClick={() => setOpen(false)}
-                >
-                  <li>{route.name}</li>
-                </Link>
-              )
-          )}
+          <li>
+            <TransitionLink to="/" onClick={() => setOpen(false)}>
+              Home
+            </TransitionLink>
+          </li>
+          {routes
+            .filter((route) => route.inHeader)
+            .map((route) => (
+              <li key={route.path}>
+                <TransitionLink to={route.path} onClick={() => setOpen(false)}>
+                  {route.name}
+                </TransitionLink>
+              </li>
+            ))}
         </ul>
-      </MenuWrapper>
+        <p>&ldquo;Painting is energy made visible&rdquo;</p>
+      </Panel>
     </>
   );
 };
