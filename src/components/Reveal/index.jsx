@@ -1,6 +1,7 @@
 import { useLayoutEffect, useRef } from 'react';
 import {
   gsap,
+  isSmallScreen,
   prefersReducedMotion,
   ScrollTrigger,
   SplitText,
@@ -36,14 +37,20 @@ export function SplitReveal({
         onSplit(self) {
           gsap.set(element, { visibility: 'visible' });
           const targets = by === 'chars' ? self.chars : self.lines;
+          const small = isSmallScreen();
           return gsap.from(targets, {
             yPercent: 110,
-            rotate: by === 'chars' ? 0 : 2,
-            duration,
+            rotate: by === 'chars' || small ? 0 : 2,
+            duration: small ? duration * 0.8 : duration,
             delay,
-            stagger: stagger ?? (by === 'chars' ? 0.035 : 0.09),
+            stagger:
+              (stagger ?? (by === 'chars' ? 0.035 : 0.09)) * (small ? 0.7 : 1),
             ease: 'expo.out',
-            scrollTrigger: { trigger: element, start, once: true },
+            scrollTrigger: {
+              trigger: element,
+              start: small ? 'top 94%' : start,
+              once: true,
+            },
           });
         },
       });
@@ -80,13 +87,18 @@ export function FadeUp({
     let tween;
     const cancel = whenPageVisible(() => {
       gsap.set(element, { visibility: 'visible' });
+      const small = isSmallScreen();
       tween = gsap.from(element, {
-        y,
+        y: small ? y * 0.6 : y,
         autoAlpha: 0,
-        duration: 1.4,
+        duration: small ? 1.1 : 1.4,
         delay,
         ease: 'expo.out',
-        scrollTrigger: { trigger: element, start: 'top 92%', once: true },
+        scrollTrigger: {
+          trigger: element,
+          start: small ? 'top 96%' : 'top 92%',
+          once: true,
+        },
       });
     });
 
@@ -113,11 +125,12 @@ export function Parallax({ speed = 12, className, children, ...rest }) {
     const element = ref.current;
     if (!element || prefersReducedMotion) return undefined;
 
+    const amount = isSmallScreen() ? speed * 0.5 : speed;
     const tween = gsap.fromTo(
       element,
-      { yPercent: speed },
+      { yPercent: amount },
       {
-        yPercent: -speed,
+        yPercent: -amount,
         ease: 'none',
         scrollTrigger: {
           trigger: element,

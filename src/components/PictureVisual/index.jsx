@@ -15,10 +15,12 @@ import ProgressiveImg from '../ProgressiveImg';
 const Section = styled.section`
   position: fixed;
   inset: 0;
-  z-index: 700;
+  z-index: 870;
   display: grid;
-  grid-template-rows: auto 1fr auto;
-  padding: clamp(80px, 8vw, 110px) clamp(20px, 3vw, 48px) clamp(20px, 3vw, 40px);
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: clamp(16px, 2.4vw, 32px);
+  height: 100svh;
+  padding: clamp(18px, 2.4vw, 34px) clamp(20px, 3vw, 48px);
   color: ${({ theme }) => theme.colors.anthracite};
   visibility: hidden;
 
@@ -29,34 +31,45 @@ const Section = styled.section`
     transform-origin: bottom;
   }
 
-  .stage {
+  .top,
+  .bottom {
     position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 0;
-    grid-row: 2;
-
-    img {
-      max-width: 100%;
-      max-height: 100%;
-      object-fit: contain;
-      box-shadow: 0 30px 80px -40px rgba(38, 40, 38, 0.6);
-    }
-  }
-
-  .bar {
-    position: relative;
-    grid-row: 3;
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
     gap: 16px;
-    padding-top: 20px;
+    min-width: 0;
+  }
+
+  .top {
+    align-items: center;
+    font-family: 'Cinzel', serif;
+    font-size: 0.9rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .stage {
+    position: relative;
+    min-height: 0;
+    touch-action: pan-y;
+
+    img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+  }
+
+  .caption {
+    min-width: 0;
 
     p {
       font-family: 'Cinzel', serif;
-      font-size: 1.2rem;
+      font-size: clamp(1.05rem, 1.6vw, 1.3rem);
+      overflow-wrap: anywhere;
     }
     span {
       font-size: 1.05rem;
@@ -64,36 +77,60 @@ const Section = styled.section`
     }
   }
 
-  .controls {
+  .nav {
     display: flex;
     gap: 28px;
+    flex-shrink: 0;
+  }
+
+  button {
+    background: none;
+    border: none;
+    color: inherit;
     font-family: 'Cinzel', serif;
     font-size: 0.9rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-
-    button {
-      background: none;
-      border: none;
-      color: inherit;
-      font: inherit;
-      letter-spacing: inherit;
-      text-transform: inherit;
-      cursor: pointer;
-    }
+    cursor: pointer;
+    padding: 8px 0;
+    -webkit-tap-highlight-color: transparent;
   }
 
   .count {
     font-variant-numeric: tabular-nums;
   }
+
+  @media ${({ theme }) => theme.sizes.tabletS} {
+    padding: 16px 16px max(20px, env(safe-area-inset-bottom));
+    gap: 16px;
+
+    .bottom {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 12px;
+    }
+    .caption {
+      text-align: center;
+    }
+    .nav {
+      justify-content: space-between;
+      border-top: 1px solid rgba(38, 40, 38, 0.2);
+      padding-top: 8px;
+    }
+  }
 `;
+
+const SWIPE_DISTANCE = 50;
 
 function PictureVisual() {
   const dispatch = useDispatch();
   const open = useSelector(selectOpen);
   const actualImg = useSelector(selectActualImg);
   const root = useRef(null);
+  const touchStart = useRef(null);
   const index = actualImg ? allPictures.findIndex((p) => p.id === actualImg.id) : -1;
+
+  const close = () => dispatch(setImg(null));
 
   // Open / close.
   useLayoutEffect(() => {
@@ -108,15 +145,15 @@ function PictureVisual() {
           { scaleY: 1, duration: 0.9, ease: 'expo.inOut' }
         )
         .fromTo(
-          q('.stage, .bar'),
-          { autoAlpha: 0, y: 40 },
+          q('.top, .stage, .bottom'),
+          { autoAlpha: 0, y: 30 },
           { autoAlpha: 1, y: 0, duration: 1, stagger: 0.08, ease: 'expo.out' },
           '-=0.35'
         );
     } else {
       gsap
         .timeline()
-        .to(q('.stage, .bar'), { autoAlpha: 0, duration: 0.35 })
+        .to(q('.top, .stage, .bottom'), { autoAlpha: 0, duration: 0.35 })
         .to(q('.backdrop'), {
           scaleY: 0,
           transformOrigin: 'top',
@@ -128,7 +165,7 @@ function PictureVisual() {
     }
   }, [open]);
 
-  // Slide in each new painting.
+  // Wipe in each new painting.
   useLayoutEffect(() => {
     if (!open) return;
     gsap.fromTo(
@@ -149,10 +186,37 @@ function PictureVisual() {
     return () => window.removeEventListener('keydown', onKey);
   }, [dispatch, open]);
 
+  const onTouchStart = (event) => {
+    const touch = event.touches[0];
+    touchStart.current = { x: touch.clientX, y: touch.clientY };
+  };
+
+  const onTouchEnd = (event) => {
+    if (!touchStart.current) return;
+    const touch = event.changedTouches[0];
+    const dx = touch.clientX - touchStart.current.x;
+    const dy = touch.clientY - touchStart.current.y;
+    touchStart.current = null;
+    if (Math.abs(dx) < SWIPE_DISTANCE || Math.abs(dx) < Math.abs(dy)) return;
+    dispatch(dx < 0 ? nextImg() : prevImg());
+  };
+
   return (
     <Section ref={root} aria-hidden={!open} role="dialog" aria-modal="true">
-      <div className="backdrop" onClick={() => dispatch(setImg(null))} />
-      <div className="stage" onClick={() => dispatch(setImg(null))}>
+      <div className="backdrop" onClick={close} />
+      <div className="top">
+        <span className="count">
+          {String(index + 1).padStart(2, '0')} /{' '}
+          {String(allPictures.length).padStart(2, '0')}
+        </span>
+        <button onClick={close}>Close</button>
+      </div>
+      <div
+        className="stage"
+        onClick={(event) => event.target === event.currentTarget && close()}
+        onTouchStart={onTouchStart}
+        onTouchEnd={onTouchEnd}
+      >
         {actualImg && (
           <ProgressiveImg
             key={actualImg.id}
@@ -161,19 +225,14 @@ function PictureVisual() {
           />
         )}
       </div>
-      <div className="bar">
-        <div>
+      <div className="bottom">
+        <div className="caption">
           <p>{actualImg?.name || 'Untitled'}</p>
-          <span>{actualImg?.dimensions}</span>
+          {actualImg?.dimensions && <span>{actualImg.dimensions}</span>}
         </div>
-        <div className="controls">
-          <button onClick={() => dispatch(prevImg())}>Prev</button>
-          <span className="count">
-            {String(index + 1).padStart(2, '0')} /{' '}
-            {String(allPictures.length).padStart(2, '0')}
-          </span>
-          <button onClick={() => dispatch(nextImg())}>Next</button>
-          <button onClick={() => dispatch(setImg(null))}>Close</button>
+        <div className="nav">
+          <button onClick={() => dispatch(prevImg())}>← Prev</button>
+          <button onClick={() => dispatch(nextImg())}>Next →</button>
         </div>
       </div>
     </Section>

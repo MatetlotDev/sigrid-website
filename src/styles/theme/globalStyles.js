@@ -35,6 +35,10 @@ const GlobalStyles = createGlobalStyle`
         text-decoration: none;
     }
 
+    a, button, img {
+        -webkit-tap-highlight-color: transparent;
+    }
+
     ::selection {
         background: ${({ theme }) => theme.colors.anthracite};
         color: ${({ theme }) => theme.colors.ivory};

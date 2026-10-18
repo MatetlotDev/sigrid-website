@@ -1,5 +1,11 @@
 import * as THREE from 'three';
-import { getLenis, gsap, prefersReducedMotion, whenPageVisible } from './core';
+import {
+  getLenis,
+  gsap,
+  isTouch,
+  prefersReducedMotion,
+  whenPageVisible,
+} from './core';
 
 // A fixed, full-screen canvas that redraws every registered <img data-gl>
 // as a textured plane, kept in sync with the element's position on screen.
@@ -208,19 +214,25 @@ class Gallery {
         element.removeAttribute('data-gl');
       });
 
-    const onEnter = () =>
+    // Hover effects follow a mouse only: on touch screens a tap would swell
+    // the painting and snap it back on release.
+    const isMouse = (event) => event.pointerType === 'mouse';
+    const onEnter = (event) =>
+      isMouse(event) &&
       gsap.to(material.uniforms.uHover, {
         value: 1,
         duration: 0.9,
         ease: 'power3.out',
       });
-    const onLeave = () =>
+    const onLeave = (event) =>
+      isMouse(event) &&
       gsap.to(material.uniforms.uHover, {
         value: 0,
         duration: 0.9,
         ease: 'power3.out',
       });
     const onMove = (event) => {
+      if (!isMouse(event)) return;
       const rect = element.getBoundingClientRect();
       gsap.to(material.uniforms.uMouse.value, {
         x: (event.clientX - rect.left) / rect.width,
@@ -272,7 +284,8 @@ class Gallery {
 
   render = (time) => {
     const lenis = getLenis();
-    const target = lenis ? lenis.velocity : 0;
+    // Touch scrolling is native and jerky: keep the paintings flat there.
+    const target = lenis && !isTouch ? lenis.velocity : 0;
     this.velocity += (target - this.velocity) * 0.12;
 
     this.items.forEach((item) => {

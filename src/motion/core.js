@@ -3,6 +3,7 @@ import { Flip } from 'gsap/Flip';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { SplitText } from 'gsap/SplitText';
 import Lenis from 'lenis';
+import { tabletSmallSize } from '../constants';
 
 gsap.registerPlugin(ScrollTrigger, SplitText, Flip);
 
@@ -12,6 +13,10 @@ export const prefersReducedMotion =
 
 export const isTouch =
   typeof window !== 'undefined' && window.matchMedia('(hover: none)').matches;
+
+// Phones get shorter, gentler motion.
+export const isSmallScreen = () =>
+  window.matchMedia(`(max-width: ${tabletSmallSize}px)`).matches;
 
 if (!prefersReducedMotion) document.documentElement.classList.add('is-motion');
 

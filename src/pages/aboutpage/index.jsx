@@ -61,13 +61,32 @@ const Section = styled.section`
   }
 
   @media ${({ theme }) => theme.sizes.tabletS} {
-    .portrait,
-    article {
-      grid-column: 1 / -1;
+    display: block;
+    padding: 112px 20px 96px;
+
+    h1 {
+      font-size: clamp(3.4rem, 19vw, 5rem);
+      margin-bottom: 40px;
+    }
+    .portrait {
       position: static;
+      width: 86%;
     }
     article {
-      margin-top: 48px;
+      margin-top: 64px;
+
+      blockquote {
+        font-size: clamp(1.6rem, 7.4vw, 2.1rem);
+        margin-bottom: 40px;
+      }
+      p {
+        font-size: 1.22rem;
+        line-height: 1.5;
+      }
+      p.lead {
+        font-size: clamp(1.45rem, 6vw, 1.8rem);
+        line-height: 1.25;
+      }
     }
   }
 `;

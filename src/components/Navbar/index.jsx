@@ -19,8 +19,10 @@ export const RollLink = styled(TransitionLink)`
     top: 100%;
     left: 0;
   }
-  &:hover span {
-    transform: translateY(-100%);
+  @media (hover: hover) {
+    &:hover span {
+      transform: translateY(-100%);
+    }
   }
 
   &.active::after {

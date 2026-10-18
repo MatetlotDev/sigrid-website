@@ -113,13 +113,20 @@ const Statement = styled.section`
     font-weight: 300;
     font-size: clamp(2rem, 4.6vw, 5rem);
     line-height: 1.08;
-    text-indent: 2.5em;
   }
 
   @media ${({ theme }) => theme.sizes.tabletS} {
-    .label,
+    display: block;
+    padding: 96px 16px;
+
+    .label {
+      padding-top: 0;
+      margin-bottom: 24px;
+      font-size: 0.75rem;
+    }
     blockquote {
-      grid-column: 1 / -1;
+      font-size: clamp(1.45rem, 6.4vw, 2rem);
+      line-height: 1.18;
     }
   }
 `;
@@ -221,12 +228,27 @@ const Works = styled.section`
   }
 
   @media ${({ theme }) => theme.sizes.tabletS} {
+    padding-bottom: 96px;
+
+    .head {
+      margin-bottom: 48px;
+    }
+    .grid {
+      row-gap: 72px;
+    }
     .grid figure:nth-child(n) {
       grid-column: 1 / -1;
       margin-top: 0;
     }
+    /* Alternate inset frames keep an editorial rhythm on a single column. */
     .grid figure:nth-child(even) {
       grid-column: 4 / -1;
+    }
+    .grid figure:nth-child(4n + 3) {
+      grid-column: 1 / 11;
+    }
+    .cta {
+      margin-top: 80px;
     }
   }
 `;
@@ -258,11 +280,25 @@ export const CircleLink = styled(TransitionLink)`
     transform: translateY(101%);
     transition: transform 0.7s ${({ theme }) => theme.ease.out};
   }
-  &:hover {
+  @media (hover: hover) {
+    &:hover {
+      color: ${({ theme }) => theme.colors.ivory};
+    }
+    &:hover::before {
+      transform: translateY(0);
+    }
+  }
+  &:active {
     color: ${({ theme }) => theme.colors.ivory};
   }
-  &:hover::before {
+  &:active::before {
     transform: translateY(0);
+    transition-duration: 0.3s;
+  }
+
+  @media ${({ theme }) => theme.sizes.tabletS} {
+    width: 136px;
+    font-size: 0.8rem;
   }
 `;
 
@@ -307,9 +343,25 @@ const AboutTeaser = styled.section`
   }
 
   @media ${({ theme }) => theme.sizes.tabletS} {
-    .portrait,
+    display: block;
+    padding: 80px 20px 96px;
+
+    .portrait {
+      width: 78%;
+      margin: 0 auto 56px;
+    }
     .text {
-      grid-column: 1 / -1;
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+
+      h2 {
+        margin-bottom: 24px;
+      }
+      a {
+        align-self: center;
+        margin-top: 40px;
+      }
     }
   }
 `;

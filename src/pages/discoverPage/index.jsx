@@ -9,6 +9,10 @@ import { setImg } from '../../store/globalSlice';
 
 const Section = styled.section`
   padding: clamp(130px, 16vw, 220px) clamp(20px, 3vw, 48px) clamp(80px, 10vw, 160px);
+
+  @media ${({ theme }) => theme.sizes.tabletS} {
+    padding: 112px 16px 96px;
+  }
 `;
 
 const Head = styled.div`
@@ -55,9 +59,38 @@ const Head = styled.div`
       opacity: 0.4;
       transition: opacity 0.4s;
 
-      &[aria-pressed='true'],
-      &:hover {
+      &[aria-pressed='true'] {
         opacity: 1;
+      }
+      @media (hover: hover) {
+        &:hover {
+          opacity: 1;
+        }
+      }
+    }
+  }
+
+  @media ${({ theme }) => theme.sizes.tabletS} {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: 28px 16px;
+    margin-bottom: 40px;
+
+    h1 {
+      grid-column: 1 / -1;
+      font-size: clamp(3.4rem, 19vw, 5rem);
+    }
+    blockquote {
+      font-size: 1.15rem;
+      max-width: 18ch;
+    }
+    .modes {
+      gap: 4px;
+
+      button {
+        padding: 12px 8px;
+        min-height: 44px;
       }
     }
   }
@@ -109,8 +142,11 @@ const Pictures = styled.div`
     }
 
     @media ${({ theme }) => theme.sizes.tabletS} {
+      gap: 64px;
+
       figure {
         grid-template-columns: 1fr;
+        gap: 0;
       }
       img {
         grid-column: 1;
@@ -119,6 +155,8 @@ const Pictures = styled.div`
       figcaption {
         grid-column: 1;
         grid-row: 2;
+        flex-direction: row;
+        align-items: baseline;
       }
     }
   }
@@ -141,6 +179,24 @@ const Pictures = styled.div`
     span {
       font-size: 1.05rem;
       opacity: 0.6;
+    }
+  }
+
+  @media ${({ theme }) => theme.sizes.tabletS} {
+    &.grid {
+      gap: 32px 12px;
+    }
+    &.grid figcaption {
+      flex-direction: column;
+      gap: 2px;
+      margin-top: 8px;
+
+      p {
+        font-size: 0.85rem;
+      }
+      span {
+        font-size: 0.95rem;
+      }
     }
   }
 `;

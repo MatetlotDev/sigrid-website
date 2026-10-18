@@ -29,7 +29,7 @@ const FooterWrapper = styled.footer`
   .name {
     margin: clamp(48px, 8vw, 120px) 0 clamp(20px, 2vw, 32px);
     font-family: 'Cinzel', serif;
-    font-size: clamp(2.6rem, 11.2vw, 13rem);
+    font-size: clamp(2.2rem, 11.2vw, 13rem);
     line-height: 0.9;
     white-space: nowrap;
     letter-spacing: 0.01em;
@@ -50,6 +50,29 @@ const FooterWrapper = styled.footer`
     letter-spacing: 0.1em;
     text-transform: uppercase;
     cursor: pointer;
+    padding: 8px 0;
+  }
+
+  @media ${({ theme }) => theme.sizes.tabletS} {
+    padding: 80px 20px max(20px, env(safe-area-inset-bottom));
+
+    .row {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 32px;
+    }
+    .tagline {
+      font-size: 1.5rem;
+    }
+    .name {
+      margin: 64px 0 24px;
+      font-size: 10.6vw;
+    }
+    .meta {
+      flex-direction: row;
+      align-items: center;
+      font-size: 0.95rem;
+    }
   }
 `;
 
