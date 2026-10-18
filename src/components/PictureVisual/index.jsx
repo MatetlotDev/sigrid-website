@@ -19,7 +19,10 @@ const Section = styled.section`
   display: grid;
   grid-template-rows: auto minmax(0, 1fr) auto;
   gap: clamp(16px, 2.4vw, 32px);
-  height: 100svh;
+  /* Follows the browser bars as they show and hide on phones. */
+  height: 100vh;
+  height: 100dvh;
+  overscroll-behavior: contain;
   padding: clamp(18px, 2.4vw, 34px) clamp(20px, 3vw, 48px);
   color: ${({ theme }) => theme.colors.anthracite};
   visibility: hidden;
